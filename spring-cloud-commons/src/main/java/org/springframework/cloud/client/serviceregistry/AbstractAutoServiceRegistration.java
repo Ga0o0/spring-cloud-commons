@@ -46,6 +46,9 @@ import org.springframework.core.env.Environment;
  * @author Spencer Gibb
  * @author Zen Huifer
  */
+// 对于 {@link ServiceRegistry} 实现来说可能有用且常见的生命周期方法。
+// TODO：记录生命周期。
+// @param 传递给 {@link ServiceRegistry} 的注册类型。
 public abstract class AbstractAutoServiceRegistration<R extends Registration>
 		implements AutoServiceRegistration, ApplicationContextAware, ApplicationListener<WebServerInitializedEvent> {
 
@@ -142,30 +145,40 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	public void start() {
 		if (!isEnabled()) {
 			if (logger.isDebugEnabled()) {
-				logger.debug("Discovery Lifecycle disabled. Not starting");
+				logger.debug("Discovery Lifecycle disabled. Not starting"); // 发现生命周期已禁用。未启动
 			}
 			return;
 		}
 
 		// only initialize if nonSecurePort is greater than 0 and it isn't already running
 		// because of containerPortInitializer below
+		// --> 译文：仅当 nonSecurePort 大于 0 并且由于下面的 containerPortInitializer 尚未运行时才进行初始化
 		if (!this.running.get()) {
+			// InstancePreRegisteredEvent --> 服务注册之前触发的事件。
 			this.context.publishEvent(new InstancePreRegisteredEvent(this, getRegistration()));
+			// RegistrationLifecycle#postProcessBeforeStartRegister()：在使用 ServiceRegistry 注册本地服务之前执行的方法
 			registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessBeforeStartRegister(getRegistration()));
+			// 使用 ServiceRegistry 注册本地服务。
 			register();
+			// RegistrationLifecycle#postProcessAfterStartRegister()：在使用 ServiceRegistry 注册本地服务之后执行的方法
 			this.registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessAfterStartRegister(getRegistration()));
+			// 是否应该向 ServiceRegistry 注册管理服务。
 			if (shouldRegisterManagement()) {
+				// 在使用 ServiceRegistry 注册本地管理服务之前执行的方法。
 				this.registrationManagementLifecycles
 					.forEach(registrationManagementLifecycle -> registrationManagementLifecycle
 						.postProcessBeforeStartRegisterManagement(getManagementRegistration()));
+				// 使用 ServiceRegistry 注册本地管理服务。
 				this.registerManagement();
+				// 在使用 ServiceRegistry 注册本地管理服务之后执行的方法。
 				registrationManagementLifecycles
 					.forEach(registrationManagementLifecycle -> registrationManagementLifecycle
 						.postProcessAfterStartRegisterManagement(getManagementRegistration()));
 
 			}
+			// InstanceRegisteredEvent --> 本地服务实例向发现服务注册后要发布的事件。
 			this.context.publishEvent(new InstanceRegisteredEvent<>(this, getConfiguration()));
 			this.running.compareAndSet(false, true);
 		}
@@ -176,6 +189,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	 * @return Whether the management service should be registered with the
 	 * {@link ServiceRegistry}.
 	 */
+	// @return 是否应该向 {@link ServiceRegistry} 注册管理服务。
 	protected boolean shouldRegisterManagement() {
 		if (this.properties == null || this.properties.isRegisterManagement()) {
 			return getManagementPort() != null && ManagementServerPortUtils.isDifferent(this.context);
@@ -260,6 +274,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	/**
 	 * Register the local service with the {@link ServiceRegistry}.
 	 */
+	// 使用 {@link ServiceRegistry} 注册本地服务。
 	protected void register() {
 		this.serviceRegistry.register(getRegistration());
 	}
@@ -267,6 +282,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	/**
 	 * Register the local management service with the {@link ServiceRegistry}.
 	 */
+	// 使用 {@link ServiceRegistry} 注册本地管理服务。
 	protected void registerManagement() {
 		R registration = getManagementRegistration();
 		if (registration != null) {
@@ -277,6 +293,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	/**
 	 * De-register the local service with the {@link ServiceRegistry}.
 	 */
+	// 使用 {@link ServiceRegistry} 取消注册本地服务。
 	protected void deregister() {
 		this.serviceRegistry.deregister(getRegistration());
 	}
@@ -284,6 +301,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 	/**
 	 * De-register the local management service with the {@link ServiceRegistry}.
 	 */
+	// 使用 {@link ServiceRegistry} 取消注册本地管理服务。
 	protected void deregisterManagement() {
 		R registration = getManagementRegistration();
 		if (registration != null) {

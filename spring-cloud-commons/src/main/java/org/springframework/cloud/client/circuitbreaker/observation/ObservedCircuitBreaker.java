@@ -29,6 +29,7 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
  * @author Marcin Grzejszczak
  * @since 4.0.0
  */
+// 观察到的断路器。
 public class ObservedCircuitBreaker implements CircuitBreaker {
 
 	private final CircuitBreaker delegate;

@@ -30,6 +30,7 @@ import org.springframework.util.Assert;
  *
  * @author Spencer Gibb
  */
+// 使用 ServiceRegistry 显示和设置服务实例状态的端点。
 @SuppressWarnings("unchecked")
 @Endpoint(id = "serviceregistry")
 public class ServiceRegistryEndpoint {

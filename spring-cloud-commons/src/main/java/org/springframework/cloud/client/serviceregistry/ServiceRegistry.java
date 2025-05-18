@@ -23,6 +23,7 @@ package org.springframework.cloud.client.serviceregistry;
  * @author Spencer Gibb
  * @since 1.2.0
  */
+// 签订合同以向服务注册表注册和注销实例。
 public interface ServiceRegistry<R extends Registration> {
 
 	/**
@@ -30,17 +31,20 @@ public interface ServiceRegistry<R extends Registration> {
 	 * instance, such as its hostname and port.
 	 * @param registration registration meta data
 	 */
+	// 注册注册信息。注册信息通常包含实例的相关信息，例如主机名和端口。
 	void register(R registration);
 
 	/**
 	 * Deregisters the registration.
 	 * @param registration registration meta data
 	 */
+	// 注销注册信息。
 	void deregister(R registration);
 
 	/**
 	 * Closes the ServiceRegistry. This is a lifecycle method.
 	 */
+	// 关闭 ServiceRegistry。这是一个生命周期方法。
 	void close();
 
 	/**
@@ -50,6 +54,7 @@ public interface ServiceRegistry<R extends Registration> {
 	 * @param status The status to set.
 	 * @see org.springframework.cloud.client.serviceregistry.endpoint.ServiceRegistryEndpoint
 	 */
+	// 设置注册状态。状态值由各个实现决定。
 	void setStatus(R registration, String status);
 
 	/**
@@ -59,6 +64,7 @@ public interface ServiceRegistry<R extends Registration> {
 	 * @return The status of the registration.
 	 * @see org.springframework.cloud.client.serviceregistry.endpoint.ServiceRegistryEndpoint
 	 */
+	// 获取特定注册的状态。
 	<T> T getStatus(R registration);
 
 }

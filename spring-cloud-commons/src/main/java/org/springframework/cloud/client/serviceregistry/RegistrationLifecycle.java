@@ -24,11 +24,13 @@ import org.springframework.core.Ordered;
  *
  * @author Zen Huifer
  */
+// 服务注册生命周期。此生命周期仅与 {@link Registration} 相关。
 public interface RegistrationLifecycle<R extends Registration> extends Ordered {
 
 	/**
 	 * default order.
 	 */
+	// 默认顺序。
 	int DEFAULT_ORDER = 0;
 
 	/**
@@ -36,6 +38,7 @@ public interface RegistrationLifecycle<R extends Registration> extends Ordered {
 	 * {@link ServiceRegistry}.
 	 * @param registration registration
 	 */
+	// 在使用 {@link ServiceRegistry} 注册本地服务之前执行的方法。
 	void postProcessBeforeStartRegister(R registration);
 
 	/**
@@ -43,6 +46,7 @@ public interface RegistrationLifecycle<R extends Registration> extends Ordered {
 	 * {@link ServiceRegistry}.
 	 * @param registration registration
 	 */
+	// 在使用 {@link ServiceRegistry} 注册本地服务之后执行的方法。
 	void postProcessAfterStartRegister(R registration);
 
 	/**
@@ -50,6 +54,7 @@ public interface RegistrationLifecycle<R extends Registration> extends Ordered {
 	 * {@link ServiceRegistry}.
 	 * @param registration registration
 	 */
+	// 在使用 {@link ServiceRegistry} 取消注册本地服务之前执行的方法。
 	void postProcessBeforeStopRegister(R registration);
 
 	/**
@@ -57,6 +62,7 @@ public interface RegistrationLifecycle<R extends Registration> extends Ordered {
 	 * {@link ServiceRegistry}.
 	 * @param registration registration
 	 */
+	// 在使用 {@link ServiceRegistry} 取消注册本地服务之后执行的方法。
 	void postProcessAfterStopRegister(R registration);
 
 	default int getOrder() {

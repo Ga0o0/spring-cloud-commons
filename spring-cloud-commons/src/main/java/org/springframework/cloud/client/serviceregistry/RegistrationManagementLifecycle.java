@@ -22,6 +22,7 @@ package org.springframework.cloud.client.serviceregistry;
  *
  * @author Zen Huifer
  */
+// 服务注册生命周期。此生命周期仅与 {@link org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration#getManagementRegistration()} 相关。
 public interface RegistrationManagementLifecycle<R extends Registration> extends RegistrationLifecycle<R> {
 
 	/**
@@ -29,6 +30,7 @@ public interface RegistrationManagementLifecycle<R extends Registration> extends
 	 * {@link ServiceRegistry}.
 	 * @param registrationManagement registrationManagement
 	 */
+	// 在使用 {@link ServiceRegistry} 注册本地管理服务之前执行的方法。
 	void postProcessBeforeStartRegisterManagement(R registrationManagement);
 
 	/**
@@ -36,6 +38,7 @@ public interface RegistrationManagementLifecycle<R extends Registration> extends
 	 * {@link ServiceRegistry}.
 	 * @param registrationManagement registrationManagement
 	 */
+	// 在使用 {@link ServiceRegistry} 注册本地管理服务之后执行的方法。
 	void postProcessAfterStartRegisterManagement(R registrationManagement);
 
 	/**
@@ -43,6 +46,7 @@ public interface RegistrationManagementLifecycle<R extends Registration> extends
 	 * {@link ServiceRegistry}.
 	 * @param registrationManagement registrationManagement
 	 */
+	// 在使用 {@link ServiceRegistry} 取消注册管理本地服务之前执行的方法。
 	void postProcessBeforeStopRegisterManagement(R registrationManagement);
 
 	/**
@@ -50,6 +54,7 @@ public interface RegistrationManagementLifecycle<R extends Registration> extends
 	 * {@link ServiceRegistry}.
 	 * @param registrationManagement registrationManagement
 	 */
+	// 在使用 {@link ServiceRegistry} 取消注册管理本地服务之后执行的方法。
 	void postProcessAfterStopRegisterManagement(R registrationManagement);
 
 }

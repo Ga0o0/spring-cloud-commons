@@ -39,6 +39,7 @@ public class AutoServiceRegistrationAutoConfiguration implements InitializingBea
 	@Override
 	public void afterPropertiesSet() {
 		if (this.autoServiceRegistration == null && this.properties.isFailFast()) {
+			// 已请求自动服务注册，但不存在 AutoServiceRegistration bean
 			throw new IllegalStateException(
 					"Auto Service Registration has " + "been requested, but there is no AutoServiceRegistration bean");
 		}

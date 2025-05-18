@@ -25,14 +25,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AutoServiceRegistrationProperties {
 
 	/** Whether service auto-registration is enabled. Defaults to true. */
+	// 是否启用服务自动注册。默认为 true。
 	private boolean enabled = true;
 
 	/** Whether to register the management as a service. Defaults to true. */
+	// 是否将管理注册为服务。默认为 true。
 	private boolean registerManagement = true;
 
 	/**
 	 * Whether startup fails if there is no AutoServiceRegistration. Defaults to false.
 	 */
+	// 如果没有 AutoServiceRegistration，启动是否失败。默认为 false。
 	private boolean failFast = false;
 
 	public boolean isEnabled() {

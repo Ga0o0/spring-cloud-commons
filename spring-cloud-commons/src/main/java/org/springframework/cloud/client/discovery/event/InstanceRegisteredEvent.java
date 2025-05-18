@@ -25,6 +25,7 @@ import org.springframework.context.ApplicationEvent;
  * @param <T> - type of configuration
  * @author Spencer Gibb
  */
+// 本地服务实例向发现服务注册后要发布的事件。
 @SuppressWarnings("serial")
 public class InstanceRegisteredEvent<T> extends ApplicationEvent {
 
@@ -35,6 +36,7 @@ public class InstanceRegisteredEvent<T> extends ApplicationEvent {
 	 * @param source The component that published the event (never {@code null}).
 	 * @param config The configuration of the instance.
 	 */
+	// 创建一个新的 {@link InstanceRegisteredEvent} 实例。
 	public InstanceRegisteredEvent(Object source, T config) {
 		super(source);
 		this.config = config;

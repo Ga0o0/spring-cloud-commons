@@ -24,6 +24,7 @@ import org.springframework.context.ApplicationEvent;
  *
  * @author Ryan Baxter
  */
+// 服务注册之前触发的事件。
 public class InstancePreRegisteredEvent extends ApplicationEvent {
 
 	private Registration registration;
@@ -33,6 +34,7 @@ public class InstancePreRegisteredEvent extends ApplicationEvent {
 	 * @param source the object on which the event initially occurred (never {@code null})
 	 * @param registration the registration meta data
 	 */
+	// 创建一个新的预注册活动。
 	public InstancePreRegisteredEvent(Object source, Registration registration) {
 		super(source);
 		this.registration = registration;
@@ -42,6 +44,7 @@ public class InstancePreRegisteredEvent extends ApplicationEvent {
 	 * Get the registration data.
 	 * @return the registration data
 	 */
+	// 获取注册数据。
 	public Registration getRegistration() {
 		return this.registration;
 	}
