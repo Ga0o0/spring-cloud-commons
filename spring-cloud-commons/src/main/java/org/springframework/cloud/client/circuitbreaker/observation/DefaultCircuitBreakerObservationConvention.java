@@ -26,6 +26,7 @@ import io.micrometer.common.KeyValues;
  * @author Marcin Grzejszczak
  * @since 4.0.0
  */
+// {@link CircuitBreakerObservationContext} 的默认实现。
 public class DefaultCircuitBreakerObservationConvention implements CircuitBreakerObservationConvention {
 
 	/**

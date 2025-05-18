@@ -22,6 +22,7 @@ package org.springframework.cloud.client.circuitbreaker;
  * @author Ryan Baxter
  * @author Andrii Bohutskyi
  */
+// 创建反应式断路器。
 public abstract class ReactiveCircuitBreakerFactory<CONF, CONFB extends ConfigBuilder<CONF>>
 		extends AbstractCircuitBreakerFactory<CONF, CONFB> {
 

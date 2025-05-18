@@ -27,6 +27,7 @@ import io.micrometer.observation.ObservationRegistry;
  * @param <T> type returned by the fallback
  * @since 4.0.0
  */
+// 观察到{@link Function}。
 class ObservedFunction<T> implements Function<Throwable, T> {
 
 	private final Function<Throwable, T> delegate;

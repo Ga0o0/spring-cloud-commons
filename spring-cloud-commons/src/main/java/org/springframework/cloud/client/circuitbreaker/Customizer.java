@@ -26,6 +26,7 @@ import java.util.function.Function;
  * @author Ryan Baxter
  * @author Toshiaki Maki
  */
+// 自定义参数化类。
 public interface Customizer<TOCUSTOMIZE> {
 
 	void customize(TOCUSTOMIZE tocustomize);
@@ -39,6 +40,12 @@ public interface Customizer<TOCUSTOMIZE> {
 	 * @param <K> the type of the identifier of the target
 	 * @return a wrapped customizer
 	 */
+	// 创建一个包装好的定制器，保证被委托的 <code>customizer</code> 的 {@link #customize(Object)} 方法在每个目标上最多被调用一次。
+	// @param customizer 被委托的定制器
+	// @param keyMapper 生成目标标识符的映射函数
+	// @param <T> 待定制目标的类型
+	// @param <K> 目标标识符的类型
+	// @return 包装好的定制器
 	static <T, K> Customizer<T> once(Customizer<T> customizer, Function<? super T, ? extends K> keyMapper) {
 		final ConcurrentMap<K, Boolean> customized = new ConcurrentHashMap<>();
 		return t -> {

@@ -21,6 +21,7 @@ package org.springframework.cloud.client.circuitbreaker;
  *
  * @author Ryan Baxter
  */
+// 断路器配置构建器。
 public interface ConfigBuilder<CONF> {
 
 	CONF build();

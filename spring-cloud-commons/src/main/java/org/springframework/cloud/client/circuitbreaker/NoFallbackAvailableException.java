@@ -21,6 +21,7 @@ package org.springframework.cloud.client.circuitbreaker;
  *
  * @author Toshiaki Maki
  */
+// 运行时异常表明断路器没有可用的回退。
 public class NoFallbackAvailableException extends RuntimeException {
 
 	public NoFallbackAvailableException(String message, Throwable cause) {

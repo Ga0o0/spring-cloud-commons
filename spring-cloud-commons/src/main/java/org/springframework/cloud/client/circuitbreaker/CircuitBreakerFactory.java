@@ -22,6 +22,7 @@ package org.springframework.cloud.client.circuitbreaker;
  * @author Ryan Baxter
  * @author Andrii Bohutskyi
  */
+// 根据底层实现创建断路器。
 public abstract class CircuitBreakerFactory<CONF, CONFB extends ConfigBuilder<CONF>>
 		extends AbstractCircuitBreakerFactory<CONF, CONFB> {
 

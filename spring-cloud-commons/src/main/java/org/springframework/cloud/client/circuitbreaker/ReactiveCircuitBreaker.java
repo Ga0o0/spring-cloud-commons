@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
  *
  * @author Ryan Baxter
  */
+// Spring Cloud 反应式断路器 API。
 public interface ReactiveCircuitBreaker {
 
 	default <T> Mono<T> run(Mono<T> toRun) {

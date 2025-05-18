@@ -24,6 +24,7 @@ import io.micrometer.observation.Observation;
  * @author Marcin Grzejszczak
  * @since 4.0.0
  */
+// 断路器 {@link Observation.Context}。
 public class CircuitBreakerObservationContext extends Observation.Context {
 
 	private final Type type;
@@ -32,6 +33,8 @@ public class CircuitBreakerObservationContext extends Observation.Context {
 	 * Creates a new instance of {@link CircuitBreakerObservationDocumentation}.
 	 * @param type type of wrapped object
 	 */
+	// 创建 {@link CircuitBreakerObservationDocumentation} 的新实例。
+	// @param type 包装对象的类型
 	public CircuitBreakerObservationContext(Type type) {
 		this.type = type;
 	}
@@ -40,6 +43,8 @@ public class CircuitBreakerObservationContext extends Observation.Context {
 	 * Gets the wrapped object type.
 	 * @return type of wrapped object
 	 */
+	// 获取包装对象的类型。
+	// @return 包装对象的类型
 	public Type getType() {
 		return type;
 	}
@@ -47,16 +52,19 @@ public class CircuitBreakerObservationContext extends Observation.Context {
 	/**
 	 * Describes the type of wrapped object.
 	 */
+	// 描述包装对象的类型。
 	public enum Type {
 
 		/**
 		 * Fallback function.
 		 */
+		// 回退功能。
 		FUNCTION,
 
 		/**
 		 * Operation to run.
 		 */
+		// 要运行的操作。
 		SUPPLIER
 
 	}

@@ -24,6 +24,7 @@ import java.util.function.Supplier;
  *
  * @author Ryan Baxter
  */
+// Spring Cloud 断路器。
 public interface CircuitBreaker {
 
 	default <T> T run(Supplier<T> toRun) {

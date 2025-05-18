@@ -25,6 +25,7 @@ import io.micrometer.observation.ObservationConvention;
  * @author Marcin Grzejszczak
  * @since 4.0.0
  */
+// {@link ObservationConvention} 用于 {@link CircuitBreakerObservationContext}。
 public interface CircuitBreakerObservationConvention extends ObservationConvention<CircuitBreakerObservationContext> {
 
 	@Override

@@ -27,6 +27,7 @@ import io.micrometer.observation.ObservationRegistry;
  * @param <T> type returned by the supplier
  * @since 4.0.0
  */
+// 观察到{@link Supplier}。
 class ObservedSupplier<T> implements Supplier<T> {
 
 	private final Supplier<T> delegate;

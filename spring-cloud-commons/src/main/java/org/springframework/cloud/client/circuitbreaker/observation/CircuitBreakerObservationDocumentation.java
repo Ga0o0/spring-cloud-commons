@@ -26,6 +26,7 @@ enum CircuitBreakerObservationDocumentation implements ObservationDocumentation 
 	/**
 	 * Observation created when we wrap a Supplier passed to the CircuitBreaker.
 	 */
+	// 当我们包装传递给 CircuitBreaker 的供应商时创建的观察。
 	CIRCUIT_BREAKER_SUPPLIER_OBSERVATION {
 		@Override
 		public Class<? extends ObservationConvention<? extends Observation.Context>> getDefaultConvention() {
@@ -48,6 +49,7 @@ enum CircuitBreakerObservationDocumentation implements ObservationDocumentation 
 	 * Observation created when we wrap a Function passed to the CircuitBreaker as
 	 * fallback.
 	 */
+	// 当我们将传递给 CircuitBreaker 的函数包装为后备时创建的观察。
 	CIRCUIT_BREAKER_FUNCTION_OBSERVATION {
 		@Override
 		public Class<? extends ObservationConvention<? extends Observation.Context>> getDefaultConvention() {
