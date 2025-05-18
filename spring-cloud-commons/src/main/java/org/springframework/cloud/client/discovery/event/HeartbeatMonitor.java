@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @author Dave Syer
  */
+// 用于监听 {@link HeartbeatEvent} 的辅助类，提供一种便捷的方法来确定状态是否发生了变化。
 public class HeartbeatMonitor {
 
 	private AtomicReference<Object> latestHeartbeat = new AtomicReference<>();

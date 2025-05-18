@@ -31,6 +31,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
  * @author Olga Maciaszek-Sharma
  * @author Charu Covindane
  */
+// {@link org.springframework.cloud.client.discovery.DiscoveryClient} 将使用属性文件作为服务实例的源。
 public class SimpleDiscoveryClient implements DiscoveryClient {
 
 	private SimpleDiscoveryProperties simpleDiscoveryProperties;

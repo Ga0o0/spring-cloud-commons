@@ -36,6 +36,7 @@ import org.springframework.core.annotation.Order;
  * @author Biju Kunjummen
  * @author Charu Covindane
  */
+// Spring Boot 自动配置简单的基于属性的发现客户端。
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore({ CommonsClientAutoConfiguration.class })
 public class SimpleDiscoveryClientAutoConfiguration implements ApplicationListener<WebServerInitializedEvent> {

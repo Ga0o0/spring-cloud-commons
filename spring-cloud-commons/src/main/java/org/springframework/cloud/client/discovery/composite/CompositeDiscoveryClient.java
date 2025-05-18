@@ -33,7 +33,8 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
  * @author Olga Maciaszek-Sharma
  * @author Sean Ruffatti
  */
-public class CompositeDiscoveryClient implements DiscoveryClient {
+// {@link DiscoveryClient} 由其他发现客户端组成，并按顺序将调用委托给每个发现客户端。
+public class CompositeDiscoveryClient implements DiscoveryClient { // 复合发现客户端
 
 	private final List<DiscoveryClient> discoveryClients;
 

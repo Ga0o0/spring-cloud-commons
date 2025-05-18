@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author Spencer Gibb
  */
+// 管理服务器端口的实用程序类。
 public final class ManagementServerPortUtils {
 
 	// for testing

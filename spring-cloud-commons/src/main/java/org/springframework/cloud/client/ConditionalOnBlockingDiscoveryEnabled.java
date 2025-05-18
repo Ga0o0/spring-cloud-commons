@@ -32,6 +32,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @author Tim Ysewyn
  * @since 2.2.0
  */
+// 提供更简洁的条件 <code>spring.cloud.discovery.blocking.enabled</code>。
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

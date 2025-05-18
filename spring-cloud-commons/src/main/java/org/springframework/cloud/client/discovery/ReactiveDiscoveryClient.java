@@ -31,6 +31,7 @@ import org.springframework.core.Ordered;
  * @author Tim Ysewyn
  * @author Olga Maciaszek-Sharma
  */
+// 表示通常可用于发现服务（例如 Netflix Eureka 或 consul.io）的读取操作。
 public interface ReactiveDiscoveryClient extends Ordered {
 
 	Log LOG = LogFactory.getLog(ReactiveDiscoveryClient.class);
@@ -38,12 +39,15 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	/**
 	 * Default order of the discovery client.
 	 */
+	// 发现客户端的默认顺序。
 	int DEFAULT_ORDER = 0;
 
 	/**
 	 * A human-readable description of the implementation, used in HealthIndicator.
 	 * @return The description.
 	 */
+	// HealthIndicator 中使用的实现的人类可读的描述。
+	// @return 描述。
 	String description();
 
 	/**
@@ -51,11 +55,15 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	 * @param serviceId The serviceId to query.
 	 * @return A List of ServiceInstance.
 	 */
+	// 获取与特定 serviceId 关联的所有 ServiceInstances。
+	// @param serviceId 要查询的服务 ID。
+	// @return 服务实例列表。
 	Flux<ServiceInstance> getInstances(String serviceId);
 
 	/**
 	 * @return All known service IDs.
 	 */
+	// @return 所有已知的服务 ID。
 	Flux<String> getServices();
 
 	/**
@@ -72,6 +80,11 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	 * within. We are leaving it with a deprecation in order not to bring downstream
 	 * implementations.
 	 */
+	// 可用于验证客户端是否仍然有效且能够进行调用。
+	//<p>成功调用且未抛出任何异常意味着客户端能够进行调用。
+	//<p>默认实现仅调用 {@link #getServices()} - 客户端实现可以选择使用更轻量级的操作进行覆盖。
+	// @deprecated 已支持 {@link ReactiveDiscoveryClient#reactiveProbe()}。
+	// 此方法不应按原样使用，因为它包含一个错误 - 调用的方法会返回一个 {@link Flux}，而该 Flux 无法从内部进行订阅或阻塞。我们将其弃用，以免引入下游实现。
 	@Deprecated
 	default void probe() {
 		if (LOG.isWarnEnabled()) {
@@ -91,6 +104,9 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	 * {@link Mono} - client implementations can override with a lighter weight operation
 	 * if they choose to.
 	 */
+	// 可用于验证客户端是否仍然有效且能够进行调用。
+	// <p>成功调用且未抛出任何异常意味着客户端能够进行调用。
+	// <p>默认实现只是调用 {@link #getServices()} 并将其包装到 {@link Mono} 中 - 客户端实现可以选择使用更轻量的操作进行覆盖。
 	default Mono<Void> reactiveProbe() {
 		return getServices().then();
 	}
@@ -99,6 +115,7 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	 * Default implementation for getting order of discovery clients.
 	 * @return order
 	 */
+	// 获取发现客户端顺序的默认实现。
 	@Override
 	default int getOrder() {
 		return DEFAULT_ORDER;

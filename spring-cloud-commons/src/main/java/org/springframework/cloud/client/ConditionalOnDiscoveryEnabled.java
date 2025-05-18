@@ -31,6 +31,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @since 2.0
  * @author Olga Maciaszek-Sharma
  */
+// 提供更简洁的条件 <code>spring.cloud.discovery.enabled</code>。
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

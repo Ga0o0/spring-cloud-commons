@@ -23,6 +23,7 @@ import org.springframework.boot.actuate.health.Health;
  *
  * @author Spencer Gibb
  */
+// 特定于 DiscoveryClient 实现的健康指示器接口。
 public interface DiscoveryHealthIndicator {
 
 	String getName();
@@ -30,6 +31,7 @@ public interface DiscoveryHealthIndicator {
 	/**
 	 * @return An indication of health.
 	 */
+	// @return 健康的指标。
 	Health health();
 
 }

@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Primary;
  *
  * @author Biju Kunjummen
  */
-
+// 复合发现客户端的自动配置。
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(SimpleDiscoveryClientAutoConfiguration.class)
 public class CompositeDiscoveryClientAutoConfiguration {

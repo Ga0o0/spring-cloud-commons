@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author Spencer Gibb
  */
+// 用于启用 DiscoveryClient 实现的注释。
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -41,6 +42,8 @@ public @interface EnableDiscoveryClient {
 	 * If true, the ServiceRegistry will automatically register the local server.
 	 * @return - {@code true} if you want to automatically register.
 	 */
+	// 如果为 true，ServiceRegistry 将自动注册本地服务器。
+	// @return - 如果要自动注册，则返回 {@code true}。
 	boolean autoRegister() default true;
 
 }

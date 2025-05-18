@@ -26,6 +26,7 @@ import org.springframework.context.ApplicationEvent;
  * @author Spencer Gibb
  * @author Dave Syer
  */
+// 如果 DiscoveryClient 实现支持来自发现服务器的心跳，则可以广播此事件。为监听器提供服务目录状态变化的基本指示。
 @SuppressWarnings("serial")
 public class HeartbeatEvent extends ApplicationEvent {
 

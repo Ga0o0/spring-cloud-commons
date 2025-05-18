@@ -53,6 +53,12 @@ public class DefaultServiceInstance implements ServiceInstance {
 	 * @param secure indicates whether or not the connection needs to be secure.
 	 * @param metadata a map containing metadata.
 	 */
+	// @param instanceId 实例的 ID。
+	// @param serviceId 服务的 ID。
+	// @param host 服务实例所在的主机。
+	// @param port 服务运行的端口。
+	// @param secure 指示连接是否需要安全。
+	// @param metadata 包含元数据的映射。
 	public DefaultServiceInstance(String instanceId, String serviceId, String host, int port, boolean secure,
 			Map<String, String> metadata) {
 		this.instanceId = instanceId;

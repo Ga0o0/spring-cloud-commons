@@ -29,6 +29,8 @@ import org.springframework.context.ApplicationEvent;
 @SuppressWarnings("serial")
 // WARNING: do not extend HearbeatEvent because of a parent context forwarding
 // Heartbeat events to a child. Avoids a stack overflow.
+// 父 ApplicationContext 可以发送给子 context 的心跳事件。
+// 例如，当通过 DiscoveryClient 定位配置服务器时，此事件会触发在父（引导）context 中触发的 HeartbeatEvent。
 public class ParentHeartbeatEvent extends ApplicationEvent {
 
 	private final Object value;

@@ -36,6 +36,7 @@ import org.springframework.util.Assert;
  * @author Phillip Webb
  * @since 2.2.0
  */
+// 将 {@link DiscoveryHealthIndicator} bean 集合转换为 {@link CompositeHealthContributor} 的适配器。
 public class DiscoveryCompositeHealthContributor implements CompositeHealthContributor {
 
 	private Map<String, DiscoveryHealthIndicator> indicators;
