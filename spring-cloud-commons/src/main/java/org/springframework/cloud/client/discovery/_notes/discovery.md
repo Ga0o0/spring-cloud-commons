@@ -1,6 +1,12 @@
 # Discovery
 
-## @EnableDiscoveryClient
+## UML
+
+![Discovery](spring-cloud-commons-client-discovery-simple.drawio.png)
+
+## 重要类
+
+### @EnableDiscoveryClient
 
 ```java
 // 用于启用 DiscoveryClient 实现的注释。
@@ -18,7 +24,7 @@ public @interface EnableDiscoveryClient {
 }
 ```
 
-### 1. EnableDiscoveryClientImportSelector
+#### 1. EnableDiscoveryClientImportSelector
 
 ```java
 public class EnableDiscoveryClientImportSelector extends SpringFactoryImportSelector<EnableDiscoveryClient> {
@@ -54,7 +60,7 @@ public class EnableDiscoveryClientImportSelector extends SpringFactoryImportSele
 }
 ```
 
-### 2. AutoServiceRegistrationConfiguration
+#### 2. AutoServiceRegistrationConfiguration
 
 ```java
 @Configuration(proxyBeanMethods = false)
@@ -86,9 +92,47 @@ public class AutoServiceRegistrationProperties {
 }
 ```
 
-## SimpleDiscoveryClientAutoConfiguration/SimpleReactiveDiscoveryClientAutoConfiguration
+### SimpleDiscoveryClientAutoConfiguration/SimpleReactiveDiscoveryClientAutoConfiguration
 
-### SimpleDiscoveryClientAutoConfiguration
+#### DiscoveryClient
+
+```java
+// 表示通常可用于发现服务（例如 Netflix Eureka 或 consul.io）的读取操作。
+public interface DiscoveryClient extends Ordered {
+    
+	// 发现客户端的默认顺序。
+	int DEFAULT_ORDER = 0;
+    
+	// HealthIndicator 中使用的实现的人类可读的描述。
+	// @return 描述。
+	String description();
+    
+	// 获取与特定 serviceId 关联的所有 ServiceInstances。
+	// @param serviceId 要查询的服务 ID。
+	// @return 服务实例列表。
+	List<ServiceInstance> getInstances(String serviceId);
+    
+	// @return 所有已知的服务 ID。
+	List<String> getServices();
+    
+	// 可用于验证客户端是否有效以及是否能够进行调用。
+	// <p>调用成功且未抛出任何异常，则表示客户端能够进行调用。
+	// <p>默认实现仅调用 {@link #getServices()} - 客户端实现可以选择使用更轻量的操作进行覆盖。
+	// probe --> 探测
+	default void probe() {
+		getServices();
+	}
+    
+	// 获取发现客户端顺序的默认实现。
+	@Override
+	default int getOrder() {
+		return DEFAULT_ORDER;
+	}
+
+}
+```
+
+#### SimpleDiscoveryClientAutoConfiguration
 
 <img src="./spring-cloud-commons-client-discovery-simple.drawio.png">
 
@@ -135,7 +179,7 @@ public class SimpleDiscoveryClientAutoConfiguration implements ApplicationListen
 }
 ```
 
-#### 1. SimpleDiscoveryProperties
+##### 1. SimpleDiscoveryProperties
 
 ```java
 @ConfigurationProperties(prefix = "spring.cloud.discovery.client.simple")
@@ -165,7 +209,7 @@ public class SimpleDiscoveryProperties implements InitializingBean {
 }
 ```
 
-#### 2. org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClient
+##### 2. org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClient
 
 ```java
 public class SimpleDiscoveryClient implements DiscoveryClient {
@@ -205,5 +249,65 @@ public class SimpleDiscoveryClient implements DiscoveryClient {
 }
 ```
 
-## org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient
+### org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient
+
+
+## 二、使用示例
+
+
+```java
+// 1. XxxDiscoveryProperties
+public class XxxDiscoveryProperties implements InitializingBean {
+
+    private Map<String, List<DefaultServiceInstance>> instances = new HashMap<>();
+
+    public Map<String, List<DefaultServiceInstance>> getInstances() {
+        return this.instances;
+    }
+
+    public void setInstances(Map<String, List<DefaultServiceInstance>> instances) {
+        this.instances = instances;
+    }
+    //...
+}
+
+// 2. XxxDiscoveryClient
+public class XxxDiscoveryClient implements DiscoveryClient {
+    
+    private XxxDiscoveryProperties properties;
+
+    public XxxDiscoveryClient(XxxDiscoveryProperties xxxDiscoveryProperties) {
+        this.properties = xxxDiscoveryProperties;
+    }
+
+    public String description() {
+        return "Xxx DiscoveryClient";
+    }
+
+    public List<ServiceInstance> getInstances(String serviceId) {
+        List<ServiceInstance> serviceInstances = new ArrayList<>();
+        List<DefaultServiceInstance> serviceInstanceForService = this.properties.getInstances()
+                .get(serviceId);
+        if (serviceInstanceForService != null) {
+            serviceInstances.addAll(serviceInstanceForService);
+        }
+        return serviceInstances;
+    }
+
+    public List<String> getServices() {
+        return this.properties.getInstances().keySet();
+    }
+    
+}
+
+// 3. 示例
+XxxDiscoveryProperties properties = new XxxDiscoveryProperties();
+properties.setInstances(...);
+DiscoveryClient discoveryClient = new  XxxDiscoveryClient(properties);
+
+String serviceId = "order-service";
+List<ServiceInstance> instanceList = discoveryClient.getInstances(serviceId);
+```
+
+
 

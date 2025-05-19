@@ -25,11 +25,13 @@ import java.util.Map;
  * @author Spencer Gibb
  * @author Tim Ysewyn
  */
+// 表示发现系统中服务的一个实例。
 public interface ServiceInstance {
 
 	/**
 	 * @return The unique instance ID as registered.
 	 */
+	// @return 注册的唯一实例 ID。
 	default String getInstanceId() {
 		return null;
 	}
@@ -37,36 +39,43 @@ public interface ServiceInstance {
 	/**
 	 * @return The service ID as registered.
 	 */
+	// @return 注册的服务 ID。
 	String getServiceId();
 
 	/**
 	 * @return The hostname of the registered service instance.
 	 */
+	// @return 已注册服务实例的主机名。
 	String getHost();
 
 	/**
 	 * @return The port of the registered service instance.
 	 */
+	// @return 已注册服务实例的端口。
 	int getPort();
 
 	/**
 	 * @return Whether the port of the registered service instance uses HTTPS.
 	 */
+	// @return 已注册服务实例的端口是否使用 HTTPS。
 	boolean isSecure();
 
 	/**
 	 * @return The service URI address.
 	 */
+	// @return 服务 URI 地址。
 	URI getUri();
 
 	/**
 	 * @return The key / value pair metadata associated with the service instance.
 	 */
+	// @return 与服务实例关联的键/值对元数据。
 	Map<String, String> getMetadata();
 
 	/**
 	 * @return The scheme of the service instance.
 	 */
+	// @return 服务实例的 scheme。
 	default String getScheme() {
 		return null;
 	}
