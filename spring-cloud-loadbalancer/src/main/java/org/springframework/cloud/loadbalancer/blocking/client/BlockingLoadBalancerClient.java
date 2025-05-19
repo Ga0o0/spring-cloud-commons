@@ -55,6 +55,7 @@ import static org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoa
  * @author Olga Maciaszek-Sharma
  * @since 2.2.0
  */
+// 默认的 {@link LoadBalancerClient} 实现。
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class BlockingLoadBalancerClient implements LoadBalancerClient {
 

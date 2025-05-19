@@ -25,6 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * @author Olga Maciaszek-Sharma
  * @since 3.0.0
  */
+// 允许从先前的 {@link LoadBalancerRequest} 对象创建 {@link Request} 对象的适配器类。
 public class LoadBalancerRequestAdapter<T, RC> extends DefaultRequest<RC> implements LoadBalancerRequest<T> {
 
 	private final LoadBalancerRequest<T> delegate;

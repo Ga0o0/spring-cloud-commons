@@ -30,6 +30,7 @@ import org.springframework.web.client.RestClient;
  * @author Olga Maciaszek-Sharma
  * @since 4.1.0
  */
+// {@link BeanPostProcessor} 将提供的 {@link ClientHttpRequestInterceptor} 添加到所有带有 {@link LoadBalanced} 注释的 {@link RestClient.Builder} 实例。
 public class LoadBalancerRestClientBuilderBeanPostProcessor<T extends ClientHttpRequestInterceptor>
 		implements BeanPostProcessor {
 

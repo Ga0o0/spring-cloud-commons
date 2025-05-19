@@ -24,6 +24,7 @@ import org.springframework.http.HttpMethod;
  * @author Olga Maciaszek-Sharma
  * @since 3.0.0
  */
+// 基于 {@link RequestData} 的 {@link DefaultRequestContext}。
 public class RequestDataContext extends DefaultRequestContext {
 
 	public RequestDataContext() {

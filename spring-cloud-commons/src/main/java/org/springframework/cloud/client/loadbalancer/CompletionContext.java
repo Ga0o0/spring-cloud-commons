@@ -25,6 +25,7 @@ import org.springframework.core.style.ToStringCreator;
  * @author Olga Maciaszek-Sharma
  * @since 3.0.0
  */
+// 允许传播与负载平衡呼叫完成状态相关的数据。
 public class CompletionContext<RES, T, C> {
 
 	private final Status status;

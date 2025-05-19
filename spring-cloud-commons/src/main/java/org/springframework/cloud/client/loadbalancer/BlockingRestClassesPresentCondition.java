@@ -27,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Olga Maciaszek-Sharma
  * @since 4.1.0
  */
+// 验证 {@link RestTemplate} 或 {@link RestClient} 类是否存在。
 public final class BlockingRestClassesPresentCondition extends AnyNestedCondition {
 
 	private BlockingRestClassesPresentCondition() {

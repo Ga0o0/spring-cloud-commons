@@ -38,6 +38,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
  * @author Olga Maciaszek-Sharma
  * @since 3.0.0
  */
+// 表示可以安全读取的请求数据（无需传递请求反应流值）。
 public class ResponseData {
 
 	private final HttpStatusCode httpStatus;

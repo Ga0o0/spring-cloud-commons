@@ -24,6 +24,7 @@ import org.springframework.http.HttpRequest;
  * @author Olga Maciaszek-Sharma
  * @since 3.1.2
  */
+// 表示在 {@link HttpRequest} 之上创建的 {@link LoadBalancerRequest}。
 public interface HttpRequestLoadBalancerRequest<T> extends LoadBalancerRequest<T> {
 
 	HttpRequest getHttpRequest();

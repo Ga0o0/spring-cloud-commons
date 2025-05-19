@@ -31,6 +31,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author Spencer Gibb
  * @since 3.1.0
  */
+// Spring Cloud Loadbalancer 的 {@link ConfigurationProperties} bean。
+
+// 各个客户端通过 {@link LoadBalancerClientsProperties#clients} 字段进行配置。
+// 默认值和其他属性位于 {@link LoadBalancerProperties} 基类中。
 @ConfigurationProperties("spring.cloud.loadbalancer")
 public class LoadBalancerClientsProperties extends LoadBalancerProperties {
 

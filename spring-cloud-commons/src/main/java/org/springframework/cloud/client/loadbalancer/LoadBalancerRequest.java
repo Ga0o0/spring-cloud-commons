@@ -25,6 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * @param <T> type of the response
  * @author Spencer Gibb
  */
+// LoadBalancerClient 使用的简单接口，用于围绕负载均衡器请求应用指标或事前和事后操作。
 public interface LoadBalancerRequest<T> {
 
 	T apply(ServiceInstance instance) throws Exception;

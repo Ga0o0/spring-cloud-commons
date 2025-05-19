@@ -29,6 +29,7 @@ import org.springframework.http.client.ClientHttpResponse;
  * @author Olga Maciaszek-Sharma
  * @since 3.1.2
  */
+// 默认的 {@link LoadBalancerRequest} 实现。
 class BlockingLoadBalancerRequest implements HttpRequestLoadBalancerRequest<ClientHttpResponse> {
 
 	private final LoadBalancerClient loadBalancer;

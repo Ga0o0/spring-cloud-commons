@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  * @author Olga Maciaszek-Sharma
  * @since 3.0
  */
+// 实用程序类，包含允许过滤支持的 {@link LoadBalancerLifecycle} bean 的方法。
 public final class LoadBalancerLifecycleValidator {
 
 	private LoadBalancerLifecycleValidator() {

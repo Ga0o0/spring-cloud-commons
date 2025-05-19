@@ -32,6 +32,8 @@ import org.springframework.http.client.ClientHttpResponse;
  * @author Olga Maciaszek-Sharma
  *
  */
+// 为 {@link LoadBalancerInterceptor} 和 {@link RetryLoadBalancerInterceptor} 创建 {@link LoadBalancerRequest}。
+// 将 {@link LoadBalancerRequestTransformer} 应用于拦截的 {@link HttpRequest}。
 public class LoadBalancerRequestFactory {
 
 	private final LoadBalancerClient loadBalancer;

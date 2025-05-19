@@ -24,6 +24,7 @@ import java.net.URI;
  *
  * @author Ryan Baxter
  */
+// 当状态代码被视为可重试时抛出异常。
 public class RetryableStatusCodeException extends IOException {
 
 	private static final String MESSAGE = "Service %s returned a status code of %d";

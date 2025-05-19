@@ -28,6 +28,8 @@ import org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerWebCli
  * @author Spencer Gibb
  * @deprecated for removal in 4.0
  */
+// {@link ObjectProvider} 的包装器。
+// 已添加用于在 {@link LoadBalancerWebClientBuilderBeanPostProcessor} 中解决此问题。
 @Deprecated(forRemoval = true)
 public class SimpleObjectProvider<T> implements ObjectProvider<T> {
 

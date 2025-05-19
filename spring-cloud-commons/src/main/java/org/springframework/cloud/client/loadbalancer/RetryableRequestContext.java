@@ -27,6 +27,7 @@ import org.springframework.core.style.ToStringCreator;
  *
  * @author Olga Maciaszek-Sharma
  */
+// 允许存储有关以前使用的服务实例的信息的请求上下文对象。
 public class RetryableRequestContext extends RequestDataContext {
 
 	private ServiceInstance previousServiceInstance;

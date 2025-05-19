@@ -27,6 +27,7 @@ import org.springframework.retry.RetryPolicy;
  * @author Ryan Baxter
  * @author Olga Maciaszek-Sharma
  */
+// {@link LoadBalancerClient} 在重试失败的请求时使用的 {@link RetryPolicy}。
 public class InterceptorRetryPolicy implements RetryPolicy {
 
 	private final HttpRequest request;
@@ -44,6 +45,11 @@ public class InterceptorRetryPolicy implements RetryPolicy {
 	 * @param serviceInstanceChooser The load balancer client.
 	 * @param serviceName The name of the service.
 	 */
+	// 创建新的重试策略。
+	// @param request 将被重试的请求。
+	// @param policy 负载均衡器的重试策略。
+	// @param serviceInstanceChooser 负载均衡器客户端。
+	// @param serviceName 服务的名称。
 	public InterceptorRetryPolicy(HttpRequest request, LoadBalancedRetryPolicy policy,
 			ServiceInstanceChooser serviceInstanceChooser, String serviceName) {
 		this.request = request;

@@ -22,6 +22,7 @@ package org.springframework.cloud.client.loadbalancer;
  * @author Ryan Baxter
  * @author Olga Maciaszek-Sharma
  */
+// 重试用于 {@link LoadBalancerClient} 的逻辑。
 public interface LoadBalancedRetryPolicy {
 
 	/**
@@ -30,6 +31,9 @@ public interface LoadBalancedRetryPolicy {
 	 * @param context The context for the retry operation.
 	 * @return True to retry the failed request on the same server; false otherwise.
 	 */
+	// 返回 true 则在同一服务器上重试失败的请求。此方法可能在执行单个操作时被多次调用。
+	// @param context 重试操作的上下文。
+	// @return True 则在同一服务器上重试失败的请求；否则为 false。
 	boolean canRetrySameServer(LoadBalancedRetryContext context);
 
 	/**
@@ -39,12 +43,17 @@ public interface LoadBalancedRetryPolicy {
 	 * @return True to retry the failed request on the next server from the load balancer;
 	 * false otherwise.
 	 */
+	// 返回 true 则表示从负载均衡器在下一个服务器上重试失败的请求。执行单个操作时，此方法可能会被多次调用。
+	// @param context 重试操作的上下文。
+	// @return True 则表示从负载均衡器在下一个服务器上重试失败的请求；否则，返回 false。
 	boolean canRetryNextServer(LoadBalancedRetryContext context);
 
 	/**
 	 * Called when the retry operation has ended.
 	 * @param context The context for the retry operation.
 	 */
+	// 重试操作结束时调用。
+	// @param context 重试操作的上下文。
 	void close(LoadBalancedRetryContext context);
 
 	/**
@@ -52,6 +61,9 @@ public interface LoadBalancedRetryPolicy {
 	 * @param context The context for the retry operation.
 	 * @param throwable The throwable from the failed execution.
 	 */
+	// 执行失败时调用。
+	// @param context 重试操作的上下文。
+	// @param throwable 执行失败时抛出的异常。
 	void registerThrowable(LoadBalancedRetryContext context, Throwable throwable);
 
 	/**
@@ -64,6 +76,11 @@ public interface LoadBalancedRetryPolicy {
 	 * @param statusCode The HTTP status code.
 	 * @return True if a retry should be attempted; false to just return the response.
 	 */
+	// 如果发出请求时未抛出异常，则会调用此方法，根据返回的状态码判断客户端是否希望重试请求。
+	// 例如，在 Cloud Foundry 中，当应用不可用时，路由器将返回 <code>404</code>。
+	// 由于 HTTP 客户端在返回 <code>404</code> 时不会抛出异常，因此 <code>retryableStatusCode</code> 允许客户端强制重试。
+	// @param statusCode HTTP 状态码。
+	// @return 设置为 True 则表示应尝试重试；设置为 false 则表示仅返回响应。
 	boolean retryableStatusCode(int statusCode);
 
 	/**
@@ -71,6 +88,9 @@ public interface LoadBalancedRetryPolicy {
 	 * @param exception the {@link Throwable} to evaluate
 	 * @return true to retry on the provided exception
 	 */
+	// 如果抛出了指定的异常，则返回 <code>true</code> 进行重试。
+	// @param exception 需要计算的 {@link Throwable}
+	// @return true 针对指定的异常进行重试
 	boolean retryableException(Throwable exception);
 
 }

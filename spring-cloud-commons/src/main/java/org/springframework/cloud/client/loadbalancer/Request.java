@@ -22,6 +22,7 @@ package org.springframework.cloud.client.loadbalancer;
  * @author Spencer Gibb
  * @author Olga Maciaszek-Sharma
  */
+// 请求的标记接口。
 public interface Request<C> {
 
 	// Avoid breaking backward compatibility

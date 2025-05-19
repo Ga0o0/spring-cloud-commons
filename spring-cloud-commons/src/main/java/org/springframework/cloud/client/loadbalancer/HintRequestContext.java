@@ -25,12 +25,14 @@ import org.springframework.core.style.ToStringCreator;
  *
  * @author Olga Maciaszek-Sharma
  */
+// 允许将提示传播到 LoadBalancer。
 public class HintRequestContext implements TimedRequestContext {
 
 	/**
 	 * A {@link String} value of hint that can be used to choose the correct service
 	 * instance.
 	 */
+	// 可用于选择正确服务实例的提示的 {@link String} 值。
 	private String hint = "default";
 
 	private long requestStartTime;

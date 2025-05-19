@@ -25,6 +25,7 @@ import org.springframework.retry.backoff.NoBackOffPolicy;
  *
  * @author Ryan Baxter
  */
+// 用于在整个 Spring Cloud 中定制重试功能的工厂类。
 public interface LoadBalancedRetryFactory {
 
 	/**
@@ -33,6 +34,10 @@ public interface LoadBalancedRetryFactory {
 	 * @param serviceInstanceChooser Used to get the next server from a load balancer.
 	 * @return A retry policy for the service.
 	 */
+	// 创建 {@link LoadBalancedRetryPolicy}。
+	// @param service 要创建重试策略的服务的 ID。
+	// @param serviceInstanceChooser 用于从负载均衡器获取下一个服务器。
+	// @return 服务的重试策略。
 	default LoadBalancedRetryPolicy createRetryPolicy(String service, ServiceInstanceChooser serviceInstanceChooser) {
 		return null;
 	}
@@ -42,6 +47,9 @@ public interface LoadBalancedRetryFactory {
 	 * @param service The service to create the {@link RetryListener}s for.
 	 * @return An array of {@link RetryListener}s.
 	 */
+	// 为给定服务创建一个 {@link RetryListener} 数组。
+	// @param service 要为其创建 {@link RetryListener} 的服务。
+	// @return 一个 {@link RetryListener} 数组。
 	default RetryListener[] createRetryListeners(String service) {
 		return new RetryListener[0];
 	}
@@ -51,6 +59,9 @@ public interface LoadBalancedRetryFactory {
 	 * @param service The service to create the {@link BackOffPolicy} for.
 	 * @return The {@link BackOffPolicy}.
 	 */
+	// 为给定服务创建 {@link BackOffPolicy}。
+	// @param service 要为其创建 {@link BackOffPolicy} 的服务。
+	// @return {@link BackOffPolicy}。
 	default BackOffPolicy createBackOffPolicy(String service) {
 		return new NoBackOffPolicy();
 	}

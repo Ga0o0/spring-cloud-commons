@@ -25,6 +25,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
  * @author Olga Maciaszek-Sharma
  * @since 4.1.2
  */
+// 用于负载平衡的 {@link ClientHttpRequestInterceptor} 实例的标记接口。
 public interface BlockingLoadBalancerInterceptor extends ClientHttpRequestInterceptor {
 
 }

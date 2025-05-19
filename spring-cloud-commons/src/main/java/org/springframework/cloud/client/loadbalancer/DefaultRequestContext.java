@@ -25,12 +25,14 @@ import org.springframework.core.style.ToStringCreator;
  *
  * @author Olga Maciaszek-Sharma
  */
+// 包含与请求相关的信息。
 public class DefaultRequestContext extends HintRequestContext {
 
 	/**
 	 * The request to be executed against the service instance selected by the
 	 * LoadBalancer.
 	 */
+	// 针对 LoadBalancer 选择的服务实例执行的请求。
 	private final Object clientRequest;
 
 	public DefaultRequestContext() {

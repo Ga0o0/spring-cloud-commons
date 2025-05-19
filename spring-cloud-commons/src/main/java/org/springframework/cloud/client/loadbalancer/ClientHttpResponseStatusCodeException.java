@@ -29,6 +29,7 @@ import org.springframework.http.client.ClientHttpResponse;
  *
  * @author Ryan Baxter
  */
+// {@link RetryableStatusCodeException} 捕获 {@link ClientHttpResponse}。
 public class ClientHttpResponseStatusCodeException extends RetryableStatusCodeException {
 
 	private final ClientHttpResponseWrapper response;
@@ -41,6 +42,11 @@ public class ClientHttpResponseStatusCodeException extends RetryableStatusCodeEx
 	 * @throws IOException Thrown if the {@link ClientHttpResponse} response code cannot
 	 * be retrieved.
 	 */
+	// 构造函数。
+	// @param serviceId 服务 ID。
+	// @param respond 响应对象。
+	// @param body 响应主体。
+	// @throws IOException 如果无法检索 {@link ClientHttpResponse} 响应代码，则抛出此异常。
 	public ClientHttpResponseStatusCodeException(String serviceId, ClientHttpResponse response, byte[] body)
 			throws IOException {
 		super(serviceId, response.getStatusCode().value(), response, null);

@@ -27,6 +27,8 @@ import org.springframework.web.client.RestClient;
  * @since 4.1.1
  * @deprecated to be removed in the next major release.
  */
+// {@link RestClient.Builder} 的自定义接口。
+// 用于在单例预实例化阶段结束时在构建器上设置 {@link LoadBalancerInterceptor}。
 @Deprecated(forRemoval = true)
 public interface RestClientBuilderCustomizer {
 

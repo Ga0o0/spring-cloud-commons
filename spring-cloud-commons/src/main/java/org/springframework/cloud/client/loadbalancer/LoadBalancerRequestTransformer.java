@@ -26,12 +26,14 @@ import org.springframework.http.HttpRequest;
  *
  * @author Will Tran
  */
+// 允许应用程序根据所选的 {@link ServiceInstance} 转换负载均衡的 {@link HttpRequest}。
 @Order(LoadBalancerRequestTransformer.DEFAULT_ORDER)
 public interface LoadBalancerRequestTransformer {
 
 	/**
 	 * Order for the load balancer request transformer.
 	 */
+	// 为负载平衡器请求变压器顺序。
 	int DEFAULT_ORDER = 0;
 
 	HttpRequest transformRequest(HttpRequest request, ServiceInstance instance);

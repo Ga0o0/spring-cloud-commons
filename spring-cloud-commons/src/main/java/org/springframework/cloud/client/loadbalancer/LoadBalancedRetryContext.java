@@ -27,6 +27,7 @@ import org.springframework.retry.context.RetryContextSupport;
  * @author Ryan Baxter
  * @author Olga Maciaszek-Sharma
  */
+// {@link RetryContext} 用于负载平衡重试。
 public class LoadBalancedRetryContext extends RetryContextSupport {
 
 	private HttpRequest request;
@@ -40,6 +41,9 @@ public class LoadBalancedRetryContext extends RetryContextSupport {
 	 * @param parent The parent context.
 	 * @param request The request that is being load-balanced.
 	 */
+	// 创建一个新的负载均衡上下文。
+	// @param parent 父上下文。
+	// @param request 正在进行负载均衡的请求。
 	public LoadBalancedRetryContext(RetryContext parent, HttpRequest request) {
 		super(parent);
 		this.request = request;
@@ -49,6 +53,8 @@ public class LoadBalancedRetryContext extends RetryContextSupport {
 	 * Gets the request that is being load-balanced.
 	 * @return The request that is being load-balanced.
 	 */
+	// 获取正在进行负载均衡的请求。
+	// @return 正在进行负载均衡的请求。
 	public HttpRequest getRequest() {
 		return this.request;
 	}
@@ -57,6 +63,8 @@ public class LoadBalancedRetryContext extends RetryContextSupport {
 	 * Sets the request that is being load-balanced.
 	 * @param request The request to be load balanced.
 	 */
+	// 设置正在进行负载均衡的请求。
+	// @param request 需要进行负载均衡的请求。
 	public void setRequest(HttpRequest request) {
 		this.request = request;
 	}
@@ -65,6 +73,8 @@ public class LoadBalancedRetryContext extends RetryContextSupport {
 	 * Gets the service instance used during the retry.
 	 * @return The service instance used during the retry.
 	 */
+	// 获取重试期间使用的服务实例。
+	// @return 重试期间使用的服务实例。
 	public ServiceInstance getServiceInstance() {
 		return this.serviceInstance;
 	}
@@ -73,6 +83,8 @@ public class LoadBalancedRetryContext extends RetryContextSupport {
 	 * Sets the service instance to use during the retry.
 	 * @param serviceInstance The service instance to use during the retry.
 	 */
+	// 设置重试期间要使用的服务实例。
+	// @param serviceInstance 重试期间要使用的服务实例。
 	public void setServiceInstance(ServiceInstance serviceInstance) {
 		setPreviousServiceInstance(this.serviceInstance);
 		this.serviceInstance = serviceInstance;

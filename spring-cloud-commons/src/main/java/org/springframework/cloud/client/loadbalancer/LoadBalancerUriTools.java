@@ -85,6 +85,10 @@ public final class LoadBalancerUriTools {
 	 * @param original the {@link URI} from the original request
 	 * @return the modified {@link URI}
 	 */
+	// 修改 URI，以便将请求重定向到所选的服务实例。
+	// @param serviceInstance 请求重定向到的 {@link ServiceInstance}。
+	// @param original 原始请求的 {@link URI}
+	// @return 修改后的 {@link URI}
 	public static URI reconstructURI(ServiceInstance serviceInstance, URI original) {
 		if (serviceInstance == null) {
 			throw new IllegalArgumentException("Service Instance cannot be null.");

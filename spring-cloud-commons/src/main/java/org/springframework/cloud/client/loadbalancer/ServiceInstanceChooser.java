@@ -25,6 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * @author Ryan Baxter
  * @author Olga Maciaszek-Sharma
  */
+// 由使用负载平衡器选择要向其发送请求的服务器的类实现。
 public interface ServiceInstanceChooser {
 
 	/**
@@ -32,6 +33,9 @@ public interface ServiceInstanceChooser {
 	 * @param serviceId The service ID to look up the LoadBalancer.
 	 * @return A ServiceInstance that matches the serviceId.
 	 */
+	// 从 LoadBalancer 中为指定服务选择一个 ServiceInstance。
+	// @param serviceId 用于查找 LoadBalancer 的服务 ID。
+	// @return 与 serviceId 匹配的 ServiceInstance。
 	ServiceInstance choose(String serviceId);
 
 	/**
@@ -42,6 +46,11 @@ public interface ServiceInstanceChooser {
 	 * @param <T> The type of the request context.
 	 * @return A ServiceInstance that matches the serviceId.
 	 */
+	// 从 LoadBalancer 中为指定的服务和 LoadBalancer 请求选择一个 ServiceInstance。
+	// @param serviceId 用于查找 LoadBalancer 的服务 ID。
+	// @param request 要传递给 LoadBalancer 的请求。
+	// @param <T> 请求上下文的类型。
+	// @return 与 serviceId 匹配的 ServiceInstance。
 	<T> ServiceInstance choose(String serviceId, Request<T> request);
 
 }

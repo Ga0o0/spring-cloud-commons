@@ -51,6 +51,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Olga Maciaszek-Sharma
  * @author Henning Pöttker
  */
+// 自动配置阻止客户端负载平衡。
 @AutoConfiguration
 @Conditional(BlockingRestClassesPresentCondition.class)
 @ConditionalOnBean(LoadBalancerClient.class)
@@ -146,6 +147,7 @@ public class LoadBalancerAutoConfiguration {
 	/**
 	 * Auto configuration for retry mechanism.
 	 */
+	// 重试机制的自动配置。
 	@AutoConfiguration
 	@ConditionalOnClass(RetryTemplate.class)
 	public static class RetryAutoConfiguration {
@@ -162,6 +164,7 @@ public class LoadBalancerAutoConfiguration {
 	/**
 	 * Auto configuration for retry intercepting mechanism.
 	 */
+	// 重试拦截机制的自动配置。
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass(RetryTemplate.class)
 	@ConditionalOnBean(ReactiveLoadBalancer.Factory.class)
