@@ -1,8 +1,10 @@
 # LoadBalancer
 
-## 一、重要类
+## 一、 UML
 
 ![LoadBalancer 重要类](spring-cloud-commons-client-loadbalancer.drawio.png)
+
+## 二、重要类
 
 ### 1. LoadBalancerAutoConfiguration
 
@@ -196,7 +198,7 @@ public class BlockingLoadBalancerClient implements LoadBalancerClient {
 以上代码中，最重要的类方法就是 `org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient#execute(java.lang.String, org.springframework.cloud.client.loadbalancer.LoadBalancerRequest<T>)`。
 
 
-## 二、使用示例
+## 三、使用示例
 
 伪代码：
 
@@ -225,5 +227,3 @@ class XxxLoadBalancerClient implements LoadBalancerClient {
 LoadBalancerClient loadBalancerClient = new XxxLoadBalancerClient();
 loadBalancerClient.execute(...);
 ```
-
-## 

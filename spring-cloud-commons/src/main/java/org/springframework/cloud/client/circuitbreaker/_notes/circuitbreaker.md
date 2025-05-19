@@ -1,10 +1,10 @@
 # Circuit Breaker
 
-## UML
+## 一、UML
 
 ![](spring-cloud-commons-client-circuitbreaker.drawio.png)
 
-## 重要类
+## 二、重要类
 
 ### ConfigBuilder
 
@@ -125,7 +125,7 @@ public interface ReactiveCircuitBreaker {
 }
 ```
 
-## 其他类
+## 三、其他类
 
 ### Customizer
 
@@ -155,7 +155,7 @@ public interface Customizer<TOCUSTOMIZE> {
 }
 ```
 
-## 使用示例
+## 四、使用示例
 
 ```java
 public class XxxConfig {

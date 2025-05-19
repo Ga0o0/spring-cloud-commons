@@ -1,10 +1,10 @@
 # Discovery
 
-## UML
+## 一、UML
 
 ![Discovery](spring-cloud-commons-client-discovery-simple.drawio.png)
 
-## 重要类
+## 二、重要类
 
 ### @EnableDiscoveryClient
 
@@ -252,7 +252,7 @@ public class SimpleDiscoveryClient implements DiscoveryClient {
 ### org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient
 
 
-## 二、使用示例
+## 三、使用示例
 
 
 ```java

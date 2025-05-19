@@ -1,10 +1,10 @@
 # Service Registry
 
-## UML
+## 一、UML
 
 ![Service Registry](spring-cloud-commons-client-serviceregistry.drawio.png)
 
-## 重要类
+## 二、重要类
 
 ### 1. 服务在服务注册表中的信息类：Registration
 
@@ -246,7 +246,7 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 }
 ```
 
-## 使用示例
+## 三、使用示例
 
 ### 1. 服务注册
 
