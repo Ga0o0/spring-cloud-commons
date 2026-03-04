@@ -29,6 +29,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
  *
  * @author Oliver Gierke
  */
+// 一个 {@link ScheduledTaskRegistrar}，它根据给定的定时配置，验证系统中的所有 {@link DiscoveredResource} 实例。
 public class RemoteResourceRefresher extends ContextLifecycleScheduledTaskRegistrar {
 
 	private final List<RemoteResource> discoveredResources;

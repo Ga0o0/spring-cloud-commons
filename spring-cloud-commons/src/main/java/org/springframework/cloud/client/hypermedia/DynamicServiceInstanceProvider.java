@@ -28,6 +28,8 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
  *
  * @author Oliver Gierke
  */
+// 使用 {@link ServiceInstanceProvider} 与 {@link DiscoveryClient} 配合，按名称查找服务。
+// 选择配置的 {@link DiscoveryClient} 返回的第一个服务。
 public class DynamicServiceInstanceProvider implements ServiceInstanceProvider {
 
 	private final DiscoveryClient client;

@@ -23,12 +23,15 @@ import org.springframework.hateoas.client.Traverson;
  *
  * @author Oliver Gierke
  */
+// 回调函数用于定义对资源的遍历。
 public interface TraversalDefinition {
 
 	/**
 	 * @param traverson The Traverson instance to run the traversal on.
 	 * @return the builder for traversing
 	 */
+	// @param traverson 要在其上进行遍历的 Traverson 实例。
+	// @return 遍历的构建器
 	Traverson.TraversalBuilder buildTraversal(Traverson traverson);
 
 }

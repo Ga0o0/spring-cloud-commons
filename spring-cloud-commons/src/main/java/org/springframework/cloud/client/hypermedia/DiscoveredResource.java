@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Oliver Gierke
  */
+// 一个由服务引用和该服务中的遍历操作定义的 REST 资源。
 public class DiscoveredResource implements RemoteResource {
 
 	private final ServiceInstanceProvider provider;

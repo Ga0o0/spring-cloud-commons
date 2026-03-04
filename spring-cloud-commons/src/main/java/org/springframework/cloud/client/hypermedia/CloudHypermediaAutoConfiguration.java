@@ -37,6 +37,7 @@ import org.springframework.hateoas.Link;
  *
  * @author Oliver Gierke
  */
+// 如果在系统中至少声明了一个 {@link RemoteResource}，则注册一个默认的 {@link RemoteResourceRefresher}。应用应用程序属性中定义的验证时间。
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Link.class)
 @ConditionalOnBean(type = "org.springframework.cloud.client.hypermedia.RemoteResource")
@@ -59,6 +60,7 @@ public class CloudHypermediaAutoConfiguration {
 	/**
 	 * Configuration for Cloud hypermedia.
 	 */
+	// 云超媒体配置。
 	@ConfigurationProperties(prefix = "spring.cloud.hypermedia")
 	public static class CloudHypermediaProperties {
 
@@ -75,6 +77,7 @@ public class CloudHypermediaAutoConfiguration {
 		/**
 		 * Configuration for Cloud hypermedia refresh.
 		 */
+		// 云超媒体刷新配置。
 		public static class Refresh {
 
 			private int fixedDelay = 5000;

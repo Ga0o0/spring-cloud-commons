@@ -24,6 +24,7 @@ import org.springframework.cloud.client.ServiceInstance;
  *
  * @author Oliver Gierke
  */
+// 一个组件，它将提供 {@link ServiceInstance}，或者通过返回 {@literal null} 来表示不存在该组件。
 public interface ServiceInstanceProvider {
 
 	/**
@@ -32,6 +33,8 @@ public interface ServiceInstanceProvider {
 	 * @return The service instance, or {@literal null} if the service is currently
 	 * unavailable.
 	 */
+	// 返回服务实例，如果服务当前不可用，则返回 {@literal null}。
+	// @return 服务实例，若服务当前不可用，则返回null。
 	ServiceInstance getServiceInstance();
 
 }

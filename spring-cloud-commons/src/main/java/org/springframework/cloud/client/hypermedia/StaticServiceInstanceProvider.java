@@ -24,6 +24,7 @@ import org.springframework.cloud.client.ServiceInstance;
  *
  * @author Oliver Gierke
  */
+// 一个总是返回已配置的 {@link ServiceInstance} 的 {@link ServiceInstanceProvider}。
 public class StaticServiceInstanceProvider implements ServiceInstanceProvider {
 
 	private final ServiceInstance instance;
