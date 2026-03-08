@@ -29,6 +29,7 @@ import org.springframework.util.StringUtils;
 /**
  * Verifies if Spring Boot has proper version.
  */
+// 验证 Spring Boot 的版本是否正确。
 class SpringBootVersionVerifier implements CompatibilityVerifier {
 
 	private static final Log log = LogFactory.getLog(SpringBootVersionVerifier.class);

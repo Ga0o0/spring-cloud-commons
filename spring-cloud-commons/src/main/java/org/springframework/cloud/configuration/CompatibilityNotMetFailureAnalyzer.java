@@ -28,6 +28,8 @@ import org.springframework.boot.diagnostics.FailureAnalysis;
  * @author Marcin Grzejszczak
  * @since 1.3.6
  */
+// 用于分析 {@link CompatibilityNotMetException} 的工具。
+// 打印发现的问题列表以及为修复这些问题应采取的行动。
 public final class CompatibilityNotMetFailureAnalyzer extends AbstractFailureAnalyzer<CompatibilityNotMetException> {
 
 	@Override

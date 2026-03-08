@@ -21,6 +21,7 @@ import org.springframework.util.ClassUtils;
 /**
  * Verifies if Spring Cloud Sleuth is present on the classpath.
  */
+// 验证类路径中是否存在 Spring Cloud Sleuth。
 class SleuthPresentVerifier implements CompatibilityVerifier {
 
 	private static final String TRACER_CLASS = "org.springframework.cloud.sleuth.Tracer";

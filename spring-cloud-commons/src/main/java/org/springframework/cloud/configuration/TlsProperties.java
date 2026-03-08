@@ -24,6 +24,7 @@ import org.springframework.core.io.Resource;
 /**
  * Common client TLS properties.
  */
+// 通用客户端 TLS 属性。
 public class TlsProperties {
 
 	private static final String DEFAULT_STORE_TYPE = "PKCS12";

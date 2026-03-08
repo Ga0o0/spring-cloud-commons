@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
  * Iterates over {@link CompatibilityVerifier} and prepares a report if exceptions were
  * found.
  */
+// 遍历{@link CompatibilityVerifier}，如果发现异常，则准备一份报告。
 class CompositeCompatibilityVerifier {
 
 	private static final Log log = LogFactory.getLog(CompositeCompatibilityVerifier.class);

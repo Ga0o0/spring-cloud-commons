@@ -26,6 +26,7 @@ import java.util.List;
  * @author Olga Maciaszek-Sharma
  * @since 1.3.6
  */
+// 当前设置不兼容时抛出异常。
 class CompatibilityNotMetException extends RuntimeException {
 
 	final List<VerificationResult> results;

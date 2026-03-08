@@ -21,6 +21,7 @@ package org.springframework.cloud.configuration;
  *
  * @author Marcin Grzejszczak
  */
+// 这样就能用于 jdk 7 了——否则我们就会使用一个谓词。
 interface CompatibilityPredicate {
 
 	boolean isCompatible();

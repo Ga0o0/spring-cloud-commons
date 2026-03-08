@@ -23,6 +23,7 @@ package org.springframework.cloud.configuration;
  * @author Marcin Grzejszczak
  * @since 1.3.6
  */
+// 实现将验证兼容性，并返回一个结果，说明当前版本系列是否兼容。
 interface CompatibilityVerifier {
 
 	VerificationResult verify();

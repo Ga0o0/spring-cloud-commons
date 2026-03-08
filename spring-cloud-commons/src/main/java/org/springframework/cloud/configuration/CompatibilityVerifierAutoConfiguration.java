@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Marcin Grzejszczak
  * @since 1.3.6
  */
+// {@link EnableAutoConfiguration 自动配置}功能在遇到不兼容的依赖项版本（例如 Boot 的无效版本）时，会快速导致构建失败。
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "spring.cloud.compatibility-verifier.enabled", matchIfMissing = true)
 @AutoConfigureOrder(0)

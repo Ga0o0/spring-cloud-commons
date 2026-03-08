@@ -29,6 +29,7 @@ public class CompatibilityVerifierProperties {
 	/**
 	 * Enables creation of Spring Cloud compatibility verification.
 	 */
+	// 支持创建 Spring Cloud 兼容性验证。
 	private boolean enabled;
 
 	/**
@@ -36,6 +37,8 @@ public class CompatibilityVerifierProperties {
 	 * the patch version if you don't want to specify a concrete value. Example:
 	 * {@code 3.4.x}
 	 */
+	// Spring Boot 依赖项的默认接受版本。
+	// 如果您不想指定具体值，可以将补丁版本设置为{@code x}。示例：{@code 3.4.x}
 	private List<String> compatibleBootVersions = List.of("3.2.x", "3.3.x");
 
 	public boolean isEnabled() {
