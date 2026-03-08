@@ -24,6 +24,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * @author Spencer Gibb
  * @since 1.2.0
  */
+// 由 {@link ServiceRegistry} 使用的标记接口。
 public interface Registration extends ServiceInstance {
 
 }
