@@ -22,7 +22,9 @@ package org.springframework.cloud.client.serviceregistry;
  *
  * @author Zen Huifer
  */
-// 服务注册生命周期。此生命周期仅与 {@link org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration#getManagementRegistration()} 相关。
+// 服务注册生命周期。此生命周期仅与 {@link
+// org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration#getManagementRegistration()}
+// 相关。
 public interface RegistrationManagementLifecycle<R extends Registration> extends RegistrationLifecycle<R> {
 
 	/**

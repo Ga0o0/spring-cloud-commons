@@ -39,6 +39,8 @@ public class HostInfoEnvironmentPostProcessor implements EnvironmentPostProcesso
 
 	// Before BootstrapConfigFileApplicationListener, but after
 	// ConfigDataEnvironmentPostProcessor
+	// --> 译文：在 BootstrapConfigFileApplicationListener 之前，但在
+	// ConfigDataEnvironmentPostProcessor 之后
 	private static final int ORDER = Math.addExact(ConfigDataEnvironmentPostProcessor.ORDER, 1);
 
 	@Override

@@ -40,6 +40,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Tim Ysewyn
  * @since 2.2.0
  */
+// 响应式 Spring Cloud Commons 客户端的 {@link EnableAutoConfiguration 自动配置}。
 @Configuration(proxyBeanMethods = false)
 public class ReactiveCommonsClientAutoConfiguration {
 

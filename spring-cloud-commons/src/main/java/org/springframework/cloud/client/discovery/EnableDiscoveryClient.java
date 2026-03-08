@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author Spencer Gibb
  */
-// 用于启用 DiscoveryClient 实现的注释。
+// 用于启用 DiscoveryClient 实现的注解
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

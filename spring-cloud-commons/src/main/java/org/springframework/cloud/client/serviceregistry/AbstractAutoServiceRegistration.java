@@ -156,12 +156,14 @@ public abstract class AbstractAutoServiceRegistration<R extends Registration>
 		if (!this.running.get()) {
 			// InstancePreRegisteredEvent --> 服务注册之前触发的事件。
 			this.context.publishEvent(new InstancePreRegisteredEvent(this, getRegistration()));
-			// RegistrationLifecycle#postProcessBeforeStartRegister()：在使用 ServiceRegistry 注册本地服务之前执行的方法
+			// RegistrationLifecycle#postProcessBeforeStartRegister()：在使用 ServiceRegistry
+			// 注册本地服务之前执行的方法
 			registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessBeforeStartRegister(getRegistration()));
 			// 使用 ServiceRegistry 注册本地服务。
 			register();
-			// RegistrationLifecycle#postProcessAfterStartRegister()：在使用 ServiceRegistry 注册本地服务之后执行的方法
+			// RegistrationLifecycle#postProcessAfterStartRegister()：在使用 ServiceRegistry
+			// 注册本地服务之后执行的方法
 			this.registrationLifecycles.forEach(
 					registrationLifecycle -> registrationLifecycle.postProcessAfterStartRegister(getRegistration()));
 			// 是否应该向 ServiceRegistry 注册管理服务。

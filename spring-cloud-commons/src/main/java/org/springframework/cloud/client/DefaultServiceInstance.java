@@ -29,6 +29,7 @@ import java.util.Objects;
  * @author Charu Covindane
  * @author Neil Powell
  */
+// {@link ServiceInstance} 的默认实现。
 public class DefaultServiceInstance implements ServiceInstance {
 
 	private String instanceId;

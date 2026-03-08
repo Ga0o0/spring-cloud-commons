@@ -2,14 +2,43 @@
 
 ## 一、UML
 
-![Discovery](spring-cloud-commons-client-discovery-simple.drawio.png)
+### DiscoveryClient
+
+![spring-cloud-commons-client-discovery.png](spring-cloud-commons-client-discovery.png)
+
+#### SimpleDiscoveryClient
+
+![Discovery](spring-cloud-commons-client-discovery-simple.png)
 
 ## 二、重要类
 
-### @EnableDiscoveryClient
+| 功能       | 依赖条件                                                                  | 是否依赖 @EnableDiscoveryClient           |
+|----------|-----------------------------------------------------------------------|---------------------------------------|
+| **服务发现** | `@ConditionalOnDiscoveryEnabled`                                      | ❌ 不需要，autoconfig 自动加载                 |
+| **服务注册** | `@ConditionalOnDiscoveryEnabled` + `ServiceRegistryAutoConfiguration` | ✅ **需要**，通过 @EnableDiscoveryClient 触发 |
+
+> **注意**：Spring Cloud Commons 4.1.x 中，`@EnableDiscoveryClient` 只会将进行本服务的自动注册。
+> 而服务发现的功能时通过 XxxDiscoveryClientAutoConfiguration（它会检测 DiscoveryClient 是否存在） 来实现的；
+
+
+### @EnableDiscoveryClient（启用服务自动注册）
+
+```text
+org/springframework/cloud/client/
+        |
+        ├── discovery/
+        |       ├── EnableDiscoveryClient.java
+        |       └── EnableDiscoveryClientImportSelector.java
+        |
+        └── serviceregistry/
+                ├── AutoServiceRegistrationConfiguration.java
+                └── AutoServiceRegistrationProperties.java
+```
+
+#### 1. @EnableDiscoveryClient
 
 ```java
-// 用于启用 DiscoveryClient 实现的注释。
+// 用于启用 DiscoveryClient 实现的注解
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -19,12 +48,12 @@ public @interface EnableDiscoveryClient {
     
 	// 如果为 true，ServiceRegistry 将自动注册本地服务器。
 	// @return - 如果要自动注册，则返回 {@code true}。
-	boolean autoRegister() default true;
+	boolean autoRegister() default true; // 是否自动注册到服务注册中心，默认true
 
 }
 ```
 
-#### 1. EnableDiscoveryClientImportSelector
+#### 2. EnableDiscoveryClientImportSelector
 
 ```java
 public class EnableDiscoveryClientImportSelector extends SpringFactoryImportSelector<EnableDiscoveryClient> {
@@ -60,7 +89,7 @@ public class EnableDiscoveryClientImportSelector extends SpringFactoryImportSele
 }
 ```
 
-#### 2. AutoServiceRegistrationConfiguration
+#### 3. AutoServiceRegistrationConfiguration
 
 ```java
 @Configuration(proxyBeanMethods = false)
@@ -92,9 +121,43 @@ public class AutoServiceRegistrationProperties {
 }
 ```
 
-### SimpleDiscoveryClientAutoConfiguration/SimpleReactiveDiscoveryClientAutoConfiguration
+### DiscoveryClient / ReactiveDiscoveryClient（服务发现）
 
-#### DiscoveryClient
+```text
+org/springframework/cloud/client/
+        |
+        └── discovery/
+                |
+                ├── composite/
+                |       ├── reactive/                   -- 组合实现 DiscoveryClient
+                |       |       ├── ReactiveCompositeDiscoveryClientAutoConfiguration.java
+                |       |       └── ReactiveCompositeDiscoveryClient.java
+                |       ├── CompositeDiscoveryClient.java
+                |       └── CompositeDiscoveryClientAutoConfiguration.java
+                |
+                ├── simple/                             -- 简单实现 DiscoveryClient
+                |       ├── reactive/
+                |       |       ├── SimpleReactiveDiscoveryClient.java
+                |       |       ├── SimpleReactiveDiscoveryClientAutoConfiguration.java
+                |       |       └── SimpleReactiveDiscoveryProperties.java
+                |       ├── SimpleDiscoveryClient.java
+                |       ├── SimpleDiscoveryClientAutoConfiguration.java
+                |       └── SimpleDiscoveryProperties.java
+                ├── ReactiveDiscoveryClient.java
+                └── DiscoveryClient.java
+```
+
+```properties
+# 来自 spring-cloud-commons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+org.springframework.cloud.client.CommonsClientAutoConfiguration
+org.springframework.cloud.client.ReactiveCommonsClientAutoConfiguration
+org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClientAutoConfiguration
+org.springframework.cloud.client.discovery.composite.reactive.ReactiveCompositeDiscoveryClientAutoConfiguration
+org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClientAutoConfiguration
+org.springframework.cloud.client.discovery.simple.reactive.SimpleReactiveDiscoveryClientAutoConfiguration
+```
+
+#### 接口 DiscoveryClient
 
 ```java
 // 表示通常可用于发现服务（例如 Netflix Eureka 或 consul.io）的读取操作。
@@ -132,9 +195,59 @@ public interface DiscoveryClient extends Ordered {
 }
 ```
 
-#### SimpleDiscoveryClientAutoConfiguration
+##### 子类 SimpleDiscoveryClient（从属性文件中获取服务实例）
 
-<img src="./spring-cloud-commons-client-discovery-simple.drawio.png">
+```java
+// {@link org.springframework.cloud.client.discovery.DiscoveryClient} 将使用属性文件作为服务实例的源。
+public class SimpleDiscoveryClient implements DiscoveryClient {
+
+    private SimpleDiscoveryProperties simpleDiscoveryProperties;
+
+    public SimpleDiscoveryClient(SimpleDiscoveryProperties simpleDiscoveryProperties) {
+        this.simpleDiscoveryProperties = simpleDiscoveryProperties;
+    }
+
+    @Override
+    public String description() {
+        return "Simple Discovery Client";
+    }
+
+    @Override
+    public List<ServiceInstance> getInstances(String serviceId) {
+        List<ServiceInstance> serviceInstances = new ArrayList<>();
+        List<DefaultServiceInstance> serviceInstanceForService = this.simpleDiscoveryProperties.getInstances()
+                .get(serviceId);
+        if (serviceInstanceForService != null) {
+            serviceInstances.addAll(serviceInstanceForService);
+        }
+        return serviceInstances;
+    }
+
+    @Override
+    public List<String> getServices() {
+        return new ArrayList<>(this.simpleDiscoveryProperties.getInstances().keySet());
+    }
+
+    @Override
+    public int getOrder() {
+        return this.simpleDiscoveryProperties.getOrder();
+    }
+}
+
+@ConfigurationProperties(prefix = "spring.cloud.discovery.client.simple")
+public class SimpleDiscoveryProperties implements InitializingBean {
+
+    private Map<String, List<DefaultServiceInstance>> instances = new HashMap<>();
+    
+    // 本地实例的属性（如果存在）。如果用户要导出需要服务实例识别的数据（例如指标），则应明确设置这些属性。
+    @NestedConfigurationProperty
+    private DefaultServiceInstance local = new DefaultServiceInstance(null, null, null, 0, false);
+    
+    // ...
+}
+```
+
+###### SimpleDiscoveryClientAutoConfiguration
 
 ```java
 @Configuration(proxyBeanMethods = false)
@@ -177,11 +290,16 @@ public class SimpleDiscoveryClientAutoConfiguration implements ApplicationListen
     
     // ...
 }
-```
 
-##### 1. SimpleDiscoveryProperties
 
-```java
+// ServerProperties
+@ConfigurationProperties(prefix = "server", ignoreUnknownFields = true)
+public class ServerProperties {
+    // ...
+}
+
+
+// SimpleDiscoveryProperties
 @ConfigurationProperties(prefix = "spring.cloud.discovery.client.simple")
 public class SimpleDiscoveryProperties implements InitializingBean {
 
@@ -209,72 +327,114 @@ public class SimpleDiscoveryProperties implements InitializingBean {
 }
 ```
 
-##### 2. org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClient
+
+##### 子类 CompositeDiscoveryClient（组合技 - 包含多个 DiscoveryClient）
 
 ```java
-public class SimpleDiscoveryClient implements DiscoveryClient {
+// {@link DiscoveryClient} 由其他发现客户端组成，并按顺序将调用委托给每个发现客户端。
+public class CompositeDiscoveryClient implements DiscoveryClient {
 
-	private SimpleDiscoveryProperties simpleDiscoveryProperties;
+// 复合发现客户端
 
-	public SimpleDiscoveryClient(SimpleDiscoveryProperties simpleDiscoveryProperties) {
-		this.simpleDiscoveryProperties = simpleDiscoveryProperties;
+	private final List<DiscoveryClient> discoveryClients;
+
+	public CompositeDiscoveryClient(List<DiscoveryClient> discoveryClients) {
+		AnnotationAwareOrderComparator.sort(discoveryClients);
+		this.discoveryClients = discoveryClients;
 	}
 
 	@Override
 	public String description() {
-		return "Simple Discovery Client";
+		return "Composite Discovery Client";
 	}
 
 	@Override
 	public List<ServiceInstance> getInstances(String serviceId) {
-		List<ServiceInstance> serviceInstances = new ArrayList<>();
-		List<DefaultServiceInstance> serviceInstanceForService = this.simpleDiscoveryProperties.getInstances()
-			.get(serviceId);
-		if (serviceInstanceForService != null) {
-			serviceInstances.addAll(serviceInstanceForService);
+		if (this.discoveryClients != null) {
+			for (DiscoveryClient discoveryClient : this.discoveryClients) {
+				List<ServiceInstance> instances = discoveryClient.getInstances(serviceId);
+				if (instances != null && !instances.isEmpty()) {
+					return instances;
+				}
+			}
 		}
-		return serviceInstances;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<String> getServices() {
-		return new ArrayList<>(this.simpleDiscoveryProperties.getInstances().keySet());
+		LinkedHashSet<String> services = new LinkedHashSet<>();
+		if (this.discoveryClients != null) {
+			for (DiscoveryClient discoveryClient : this.discoveryClients) {
+				List<String> serviceForClient = discoveryClient.getServices();
+				if (serviceForClient != null) {
+					services.addAll(serviceForClient);
+				}
+			}
+		}
+		return new ArrayList<>(services);
 	}
 
 	@Override
-	public int getOrder() {
-		return this.simpleDiscoveryProperties.getOrder();
+	public void probe() {
+		if (this.discoveryClients != null) {
+			for (DiscoveryClient discoveryClient : this.discoveryClients) {
+				discoveryClient.probe();
+			}
+		}
+	}
+
+	public List<DiscoveryClient> getDiscoveryClients() {
+		return this.discoveryClients;
 	}
 
 }
 ```
 
-### org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient
+###### CompositeDiscoveryClientAutoConfiguration
+
+```java
+// 复合发现客户端的自动配置。
+@Configuration(proxyBeanMethods = false)
+@AutoConfigureBefore(SimpleDiscoveryClientAutoConfiguration.class)
+public class CompositeDiscoveryClientAutoConfiguration {
+
+	@Bean
+	@Primary
+	public CompositeDiscoveryClient compositeDiscoveryClient(List<DiscoveryClient> discoveryClients) {
+		return new CompositeDiscoveryClient(discoveryClients);
+	}
+
+}
+```
+
+
+#### 接口 ReactiveDiscoveryClient
+
+##### 子类 SimpleReactiveDiscoveryClient
+###### SimpleReactiveDiscoveryClientAutoConfiguration
+
+##### 子类 ReactiveCompositeDiscoveryClient
+###### ReactiveCompositeDiscoveryClientAutoConfiguration
 
 
 ## 三、使用示例
 
-
 ```java
+import java.util.List;
+
 // 1. XxxDiscoveryProperties
 public class XxxDiscoveryProperties implements InitializingBean {
-
-    private Map<String, List<DefaultServiceInstance>> instances = new HashMap<>();
-
-    public Map<String, List<DefaultServiceInstance>> getInstances() {
-        return this.instances;
-    }
-
-    public void setInstances(Map<String, List<DefaultServiceInstance>> instances) {
-        this.instances = instances;
-    }
-    //...
+    private String host;
+    private int port;
+    // ...
 }
 
 // 2. XxxDiscoveryClient
 public class XxxDiscoveryClient implements DiscoveryClient {
-    
+
     private XxxDiscoveryProperties properties;
+    private NacosService service;       // nacos / zookeeper 等等
 
     public XxxDiscoveryClient(XxxDiscoveryProperties xxxDiscoveryProperties) {
         this.properties = xxxDiscoveryProperties;
@@ -285,28 +445,208 @@ public class XxxDiscoveryClient implements DiscoveryClient {
     }
 
     public List<ServiceInstance> getInstances(String serviceId) {
-        List<ServiceInstance> serviceInstances = new ArrayList<>();
-        List<DefaultServiceInstance> serviceInstanceForService = this.properties.getInstances()
-                .get(serviceId);
+        // 根据配置信息（XxxDiscoveryProperties）和 serviceId 获取可用的服务实例
+        List<DefaultServiceInstance> serviceInstanceForService =
+                service.getInstances(this.properties, serviceId);
         if (serviceInstanceForService != null) {
-            serviceInstances.addAll(serviceInstanceForService);
+            return serviceInstanceForService;
+        } else {
+            return List.of();
         }
-        return serviceInstances;
     }
 
     public List<String> getServices() {
-        return this.properties.getInstances().keySet();
+        // 根据配置信息（XxxDiscoveryProperties）获取所有的服务
+        return service.getServices(this.properties);
     }
-    
+
 }
 
 // 3. 示例
 XxxDiscoveryProperties properties = new XxxDiscoveryProperties();
-properties.setInstances(...);
-DiscoveryClient discoveryClient = new  XxxDiscoveryClient(properties);
+DiscoveryClient discoveryClient = new XxxDiscoveryClient(properties);
 
 String serviceId = "order-service";
 List<ServiceInstance> instanceList = discoveryClient.getInstances(serviceId);
+```
+
+## 四、实际应用
+
+### 在 spring-cloud-starter-alibaba-nacos-discovery 中的应用
+
+#### NacosDiscoveryClient
+
+```java
+// com.alibaba.cloud.nacos.discovery.NacosDiscoveryClient
+public class NacosDiscoveryClient implements DiscoveryClient {
+    // ...
+	private NacosServiceDiscovery serviceDiscovery;
+    // ...
+
+	@Override
+	public List<ServiceInstance> getInstances(String serviceId) {
+		try {
+			return Optional.of(serviceDiscovery.getInstances(serviceId))
+					.map(instances -> {
+						ServiceCache.setInstances(serviceId, instances);
+						return instances;
+					}).get();
+		}
+		catch (Exception e) {
+			if (failureToleranceEnabled) {
+				return ServiceCache.getInstances(serviceId);
+			}
+			throw new RuntimeException(
+					"Can not get hosts from nacos server. serviceId: " + serviceId, e);
+		}
+	}
+
+	@Override
+	public List<String> getServices() {
+		try {
+			return Optional.of(serviceDiscovery.getServices()).map(services -> {
+				ServiceCache.setServiceIds(services);
+				return services;
+			}).get();
+		}
+		catch (Exception e) {
+			log.error("get service name from nacos server failed.", e);
+			return failureToleranceEnabled ? ServiceCache.getServiceIds()
+					: Collections.emptyList();
+		}
+	}
+
+}
+
+// com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery
+public class NacosServiceDiscovery {
+
+    private NacosDiscoveryProperties discoveryProperties;
+    private NacosServiceManager nacosServiceManager;
+
+    public List<ServiceInstance> getInstances(String serviceId) throws NacosException {
+        String group = discoveryProperties.getGroup();
+        List<Instance> instances = namingService().selectInstances(serviceId, group,
+                true);
+        return hostToServiceInstanceList(instances, serviceId);
+    }
+
+    public List<String> getServices() throws NacosException {
+        String group = discoveryProperties.getGroup();
+        ListView<String> services = namingService().getServicesOfServer(1,
+                Integer.MAX_VALUE, group);
+        return services.getData();
+    }
+    // ...
+    private NamingService namingService() {
+        return nacosServiceManager.getNamingService();
+    }
+}
+
+
+// com.alibaba.cloud.nacos.NacosServiceManager
+import com.alibaba.nacos.api.naming.NamingMaintainService;
+import com.alibaba.nacos.api.naming.NamingService;
+public class NacosServiceManager {
+    private NacosDiscoveryProperties nacosDiscoveryProperties;
+    private volatile NamingService namingService;
+    private volatile NamingMaintainService namingMaintainService;
+    // ...
+}
+
+
+// com.alibaba.cloud.nacos.NacosDiscoveryProperties
+@ConfigurationProperties("spring.cloud.nacos.discovery")
+public class NacosDiscoveryProperties {
+    // ...
+}
+```
+
+#### XxxAutoConfiguration
+
+```properties
+# spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-nacos-discovery/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration
+# ...
+com.alibaba.cloud.nacos.discovery.NacosDiscoveryClientConfiguration
+com.alibaba.cloud.nacos.discovery.NacosDiscoveryHeartBeatConfiguration
+com.alibaba.cloud.nacos.discovery.reactive.NacosReactiveDiscoveryClientConfiguration
+com.alibaba.cloud.nacos.loadbalancer.LoadBalancerNacosAutoConfiguration
+# ...
+com.alibaba.cloud.nacos.NacosServiceAutoConfiguration
+# ...
+```
+
+##### NacosServiceAutoConfiguration
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnDiscoveryEnabled
+@ConditionalOnNacosDiscoveryEnabled
+public class NacosServiceAutoConfiguration {
+	@Bean
+	public NacosServiceManager nacosServiceManager() {
+		return new NacosServiceManager();
+	}
+}
+```
+
+##### NacosDiscoveryAutoConfiguration
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnDiscoveryEnabled
+@ConditionalOnNacosDiscoveryEnabled
+public class NacosDiscoveryAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	public NacosDiscoveryProperties nacosProperties() {
+		return new NacosDiscoveryProperties();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public NacosServiceDiscovery nacosServiceDiscovery(
+			NacosDiscoveryProperties discoveryProperties,
+			NacosServiceManager nacosServiceManager) {
+		return new NacosServiceDiscovery(discoveryProperties, nacosServiceManager);
+	}
+
+}
+```
+
+##### NacosDiscoveryClientConfiguration
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnDiscoveryEnabled
+@ConditionalOnBlockingDiscoveryEnabled
+@ConditionalOnNacosDiscoveryEnabled
+@AutoConfigureBefore({ SimpleDiscoveryClientAutoConfiguration.class,
+		CommonsClientAutoConfiguration.class })
+@AutoConfigureAfter(NacosDiscoveryAutoConfiguration.class)
+public class NacosDiscoveryClientConfiguration {
+
+	@Bean
+	public DiscoveryClient nacosDiscoveryClient(
+			NacosServiceDiscovery nacosServiceDiscovery) {
+		return new NacosDiscoveryClient(nacosServiceDiscovery);
+	}
+
+	/**
+	 * NacosWatch is no longer enabled by default .
+	 * see https://github.com/alibaba/spring-cloud-alibaba/issues/2868
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	@ConditionalOnProperty(value = "spring.cloud.nacos.discovery.watch.enabled", matchIfMissing = false)
+	public NacosWatch nacosWatch(NacosServiceManager nacosServiceManager,
+			NacosDiscoveryProperties nacosDiscoveryProperties) {
+		return new NacosWatch(nacosServiceManager, nacosDiscoveryProperties);
+	}
+
+}
 ```
 
 

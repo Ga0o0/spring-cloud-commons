@@ -34,6 +34,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @author Tim Ysewyn
  * @since 2.2.0
  */
+// 提供了一个更为简洁的条件配置项
+// <code>spring.cloud.discovery.reactive.enabled</code>。同时，还会考虑类路径中是否包含 `WebClient`。
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

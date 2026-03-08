@@ -32,6 +32,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @since 2.2.0
  * @author Tim Ysewyn
  */
+// 提供了一个更简洁的条件配置项<code>spring.cloud.discovery.client.health-indicator.enabled</code>。
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

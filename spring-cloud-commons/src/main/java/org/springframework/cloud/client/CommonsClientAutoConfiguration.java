@@ -48,6 +48,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Tim Ysewyn
  * @author Omer Naci Soydemir
  */
+// Spring Cloud Commons Client 的 {@link EnableAutoConfiguration 自动配置}。
 @Configuration(proxyBeanMethods = false)
 public class CommonsClientAutoConfiguration {
 

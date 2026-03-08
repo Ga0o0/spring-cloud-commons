@@ -38,9 +38,11 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
  * @author Tim Ysewyn
  * @author Charu Covindane
  */
-// 用于保存指定服务的 {@link org.springframework.cloud.client.discovery.DiscoveryClient} 服务实例的详细信息的属性。
+// 用于保存指定服务的 {@link org.springframework.cloud.client.discovery.DiscoveryClient}
+// 服务实例的详细信息的属性。
 // 它还保存用户可配置的顺序，该顺序将用于确定此客户端
-// 在 {@link org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient} 使用的客户端列表中的优先级。
+// 在 {@link org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient}
+// 使用的客户端列表中的优先级。
 @ConfigurationProperties(prefix = "spring.cloud.discovery.client.simple")
 public class SimpleDiscoveryProperties implements InitializingBean {
 

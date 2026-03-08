@@ -81,10 +81,11 @@ public interface ReactiveDiscoveryClient extends Ordered {
 	 * implementations.
 	 */
 	// 可用于验证客户端是否仍然有效且能够进行调用。
-	//<p>成功调用且未抛出任何异常意味着客户端能够进行调用。
-	//<p>默认实现仅调用 {@link #getServices()} - 客户端实现可以选择使用更轻量级的操作进行覆盖。
+	// <p>成功调用且未抛出任何异常意味着客户端能够进行调用。
+	// <p>默认实现仅调用 {@link #getServices()} - 客户端实现可以选择使用更轻量级的操作进行覆盖。
 	// @deprecated 已支持 {@link ReactiveDiscoveryClient#reactiveProbe()}。
-	// 此方法不应按原样使用，因为它包含一个错误 - 调用的方法会返回一个 {@link Flux}，而该 Flux 无法从内部进行订阅或阻塞。我们将其弃用，以免引入下游实现。
+	// 此方法不应按原样使用，因为它包含一个错误 - 调用的方法会返回一个 {@link Flux}，而该 Flux
+	// 无法从内部进行订阅或阻塞。我们将其弃用，以免引入下游实现。
 	@Deprecated
 	default void probe() {
 		if (LOG.isWarnEnabled()) {
