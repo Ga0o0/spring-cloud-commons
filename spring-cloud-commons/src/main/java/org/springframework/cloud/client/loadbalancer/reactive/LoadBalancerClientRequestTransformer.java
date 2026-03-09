@@ -26,6 +26,7 @@ import org.springframework.web.reactive.function.client.ClientRequest;
  *
  * @author Toshiaki Maki
  */
+// 允许应用程序根据选定的 {@link ServiceInstance} 转换负载均衡的 {@link ClientRequest}。
 @Order(LoadBalancerClientRequestTransformer.DEFAULT_ORDER)
 public interface LoadBalancerClientRequestTransformer {
 

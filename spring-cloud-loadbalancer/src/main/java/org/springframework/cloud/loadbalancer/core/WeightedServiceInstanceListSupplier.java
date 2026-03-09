@@ -34,6 +34,7 @@ import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalanc
  * @author Zhuozhi Ji
  * @author Olga Maciaszek-Sharma
  */
+// 使用权重来扩展委托提供的实例的 {@link ServiceInstanceListSupplier} 实现。
 public class WeightedServiceInstanceListSupplier extends DelegatingServiceInstanceListSupplier {
 
 	private static final Log LOG = LogFactory.getLog(WeightedServiceInstanceListSupplier.class);

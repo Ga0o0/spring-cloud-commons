@@ -25,7 +25,7 @@ import org.springframework.core.style.ToStringCreator;
  *
  * @author Olga Maciaszek-Sharma
  */
-// 包含与请求相关的信息。
+// 包含与请求相关的信息
 public class DefaultRequestContext extends HintRequestContext {
 
 	/**

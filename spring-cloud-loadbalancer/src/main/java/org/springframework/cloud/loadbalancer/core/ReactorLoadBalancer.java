@@ -28,6 +28,7 @@ import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalanc
  * @param <T> - type of the response
  * @author Spencer Gibb
  */
+// 基于 Reactor 的 {@link ReactiveLoadBalancer} 实现。
 public interface ReactorLoadBalancer<T> extends ReactiveLoadBalancer<T> {
 
 	/**
@@ -35,6 +36,9 @@ public interface ReactorLoadBalancer<T> extends ReactiveLoadBalancer<T> {
 	 * @param request - an input request
 	 * @return - mono of response
 	 */
+	// 根据负载均衡算法选择下一个服务器。
+	// @param request - 输入请求
+	// @return - 响应的 mono 对象
 	@SuppressWarnings("rawtypes")
 	Mono<Response<T>> choose(Request request);
 

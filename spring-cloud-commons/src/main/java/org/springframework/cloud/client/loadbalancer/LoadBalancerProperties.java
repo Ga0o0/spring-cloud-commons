@@ -61,7 +61,8 @@ public class LoadBalancerProperties {
 	 * request and can subsequently be used in {@link ReactiveLoadBalancer}
 	 * implementations.
 	 */
-	// 允许设置传递给 LoadBalancer 请求的 <code>hint</code> 的值，随后可在 {@link ReactiveLoadBalancer} 实现中使用。
+	// 允许设置传递给 LoadBalancer 请求的 <code>hint</code> 的值，随后可在 {@link ReactiveLoadBalancer}
+	// 实现中使用。
 	private Map<String, String> hint = new LinkedCaseInsensitiveMap<>();
 
 	/**
@@ -94,9 +95,12 @@ public class LoadBalancerProperties {
 	 * retrieval over the network, before any request-based filtering is done,
 	 * {@code true} by default.
 	 */
-	// 如果此标志设置为 {@code true}，则将实现 {@code ServiceInstanceListSupplier#get(Request request)} 方法
-	// 来调用 {@code delegate.get(request)}，这些类可从 {@code DelegatingServiceInstanceListSupplier} 分配，
-	// 但尚未实现该方法，但不包括 {@code CachingServiceInstanceListSupplier} 和 {@code HealthCheckServiceInstanceListSupplier}，
+	// 如果此标志设置为 {@code true}，则将实现 {@code ServiceInstanceListSupplier#get(Request request)}
+	// 方法
+	// 来调用 {@code delegate.get(request)}，这些类可从 {@code
+	// DelegatingServiceInstanceListSupplier} 分配，
+	// 但尚未实现该方法，但不包括 {@code CachingServiceInstanceListSupplier} 和 {@code
+	// HealthCheckServiceInstanceListSupplier}，
 	// 它们应放置在实例供应商层次结构中，在供应商通过网络执行实例检索之后，在进行任何基于请求的过滤之前，默认情况下为 {@code true}。
 	private boolean callGetWithRequestOnDelegates = true;
 
@@ -104,7 +108,8 @@ public class LoadBalancerProperties {
 	 * Properties for
 	 * {@link org.springframework.cloud.loadbalancer.core.SubsetServiceInstanceListSupplier}.
 	 */
-	// {@link org.springframework.cloud.loadbalancer.core.SubsetServiceInstanceListSupplier} 的属性。
+	// {@link
+	// org.springframework.cloud.loadbalancer.core.SubsetServiceInstanceListSupplier} 的属性。
 	private Subset subset = new Subset();
 
 	public HealthCheck getHealthCheck() {

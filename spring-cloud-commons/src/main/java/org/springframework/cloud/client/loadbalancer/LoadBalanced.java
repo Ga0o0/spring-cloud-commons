@@ -31,7 +31,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
  *
  * @author Spencer Gibb
  */
-// 用于标记 RestTemplate、RestClient.Builder 或 WebClient.Builder bean 需要配置为使用 LoadBalancerClient 的注解。
+// 用于标记 RestTemplate、RestClient.Builder 或 WebClient.Builder bean 需要配置为使用
+// LoadBalancerClient 的注解。
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

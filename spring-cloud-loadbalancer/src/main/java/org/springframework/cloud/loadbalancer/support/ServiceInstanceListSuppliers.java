@@ -31,6 +31,7 @@ import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
  * @author Spencer Gibb
  * @author Olga Maciaszek-Sharma
  */
+// 用于服务实例列表供应商的实用程序类。
 public final class ServiceInstanceListSuppliers {
 
 	private ServiceInstanceListSuppliers() {

@@ -29,6 +29,7 @@ import org.springframework.cloud.client.loadbalancer.Request;
  *
  * @author Olga Maciaszek-Sharma
  */
+// {@link ServiceInstanceListSupplier} 的空操作实现。
 public class NoopServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
 	@Override

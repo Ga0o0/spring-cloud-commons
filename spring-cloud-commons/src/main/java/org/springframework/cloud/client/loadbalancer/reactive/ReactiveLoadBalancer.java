@@ -33,11 +33,13 @@ import org.springframework.cloud.client.loadbalancer.Response;
  * @author Spencer Gibb
  * @author Olga Maciaszek-Sharma
  */
+// 响应式负载均衡器
 public interface ReactiveLoadBalancer<T> {
 
 	/**
 	 * Default implementation of a request.
 	 */
+	// 请求的默认实现
 	Request<DefaultRequestContext> REQUEST = new DefaultRequest<>();
 
 	/**
@@ -45,6 +47,9 @@ public interface ReactiveLoadBalancer<T> {
 	 * @param request - incoming request
 	 * @return publisher for the response
 	 */
+	// 根据负载均衡算法选择下一个服务器。
+	// @param request - 传入的请求
+	// @return 用于响应的发布者
 	@SuppressWarnings("rawtypes")
 	Publisher<Response<T>> choose(Request request);
 
@@ -68,6 +73,13 @@ public interface ReactiveLoadBalancer<T> {
 		 * @return a {@link Map} of beans
 		 * @see <code>@LoadBalancerClient</code>
 		 */
+		// 允许访问在客户端特定 LoadBalancer 上下文中注册的 bean。
+		//
+		// @param name 要返回的 bean 的名称
+		// @param type 要返回的 bean 的类
+		// @param <X> 要返回的 bean 的类型
+		// @return bean 的 {@link Map}
+		// @see <code>@LoadBalancerClient</code>
 		<X> Map<String, X> getInstances(String name, Class<X> type);
 
 		/**
@@ -80,6 +92,14 @@ public interface ReactiveLoadBalancer<T> {
 		 * @return a {@link Map} of beans
 		 * @see <code>@LoadBalancerClient</code>
 		 */
+		// 允许访问在客户端特定负载均衡器上下文中注册的 bean。
+		//
+		// @param name 要返回的 bean 的名称
+		// @param clazz 要返回的 bean 的类
+		// @param generics 要返回的 bean 的泛型类型类
+		// @param <X> 要返回的 bean 的类型
+		// @return bean 的 {@link Map}
+		// @see <code>@LoadBalancerClient</code>
 		<X> X getInstance(String name, Class<?> clazz, Class<?>... generics);
 
 	}

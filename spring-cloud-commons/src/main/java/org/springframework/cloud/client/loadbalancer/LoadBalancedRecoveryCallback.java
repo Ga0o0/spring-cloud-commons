@@ -31,7 +31,8 @@ import org.springframework.retry.RetryException;
  * @param <R> - response type from the HTTP client
  * @author LiYuan Lee
  */
-// {@link RecoveryCallback} 的实现依赖于 {@link RetryableStatusCodeException} 的实现来包含来自请求的最后一个响应对象。
+// {@link RecoveryCallback} 的实现依赖于 {@link RetryableStatusCodeException}
+// 的实现来包含来自请求的最后一个响应对象。
 public abstract class LoadBalancedRecoveryCallback<T, R> implements RecoveryCallback<T> {
 
 	/**

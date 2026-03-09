@@ -28,6 +28,9 @@ import org.springframework.cloud.client.ServiceInstance;
  * @author Zhuozhi Ji
  * @see java.util.function.ToIntFunction
  */
+// 表示一个计算给定服务实例权重的函数。
+//
+// <p>这是一个函数式接口，其函数式方法是 {@link #apply(ServiceInstance)}。
 @FunctionalInterface
 public interface WeightFunction {
 
@@ -36,6 +39,9 @@ public interface WeightFunction {
 	 * @param instance the service instance
 	 * @return the weight of service instance
 	 */
+	// 将此函数应用于给定的服务实例。
+	// @param instance 服务实例
+	// @return 服务实例的权重
 	int apply(ServiceInstance instance);
 
 }

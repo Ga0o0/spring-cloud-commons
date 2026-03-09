@@ -30,6 +30,7 @@ import org.springframework.cloud.client.loadbalancer.Request;
  * @author Olga Maciaszek-Sharma
  * @since 2.2.0
  */
+// 一个包含 {@link ServiceInstance} 对象列表的 {@link Supplier}。
 public interface ServiceInstanceListSupplier extends Supplier<Flux<List<ServiceInstance>>> {
 
 	String getServiceId();

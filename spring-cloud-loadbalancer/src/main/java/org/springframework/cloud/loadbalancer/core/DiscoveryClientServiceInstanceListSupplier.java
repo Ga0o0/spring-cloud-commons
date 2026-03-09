@@ -43,11 +43,13 @@ import static org.springframework.cloud.loadbalancer.support.LoadBalancerClientF
  * @author Rod Catter
  * @since 2.2.0
  */
+// discovery-client-based 的 {@link ServiceInstanceListSupplier} 实现。
 public class DiscoveryClientServiceInstanceListSupplier implements ServiceInstanceListSupplier {
 
 	/**
 	 * Property that establishes the timeout for calls to service discovery.
 	 */
+	// 设置服务发现调用超时时间的属性。
 	public static final String SERVICE_DISCOVERY_TIMEOUT = "spring.cloud.loadbalancer.service-discovery.timeout";
 
 	private static final Log LOG = LogFactory.getLog(DiscoveryClientServiceInstanceListSupplier.class);

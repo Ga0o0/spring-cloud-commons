@@ -34,6 +34,8 @@ import org.springframework.core.annotation.AliasFor;
  *
  * @author Dave Syer
  */
+// 负载均衡器客户端的声明式配置。将此注解添加到任何
+// <code>@Configuration</code>，然后注入 {@link LoadBalancerClientFactory} 以访问已创建的客户端。
 @Configuration(proxyBeanMethods = false)
 @Import(LoadBalancerClientConfigurationRegistrar.class)
 @Target(ElementType.TYPE)

@@ -22,7 +22,7 @@ package org.springframework.cloud.client.loadbalancer;
  * @param <T> type of the server
  * @author Spencer Gibb
  */
-// 为每个请求创建响应。
+// 为每个请求创建响应
 public interface Response<T> {
 
 	boolean hasServer();

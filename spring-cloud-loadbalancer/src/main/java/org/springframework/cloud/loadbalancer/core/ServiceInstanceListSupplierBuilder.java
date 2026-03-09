@@ -54,6 +54,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author Sabyasachi Bhattacharya
  * @author Zhuozhi Ji
  */
+// 用于创建 {@link ServiceInstanceListSupplier} 层次结构的构建器，该层次结构将在 {@link ReactorLoadBalancer} 配置中使用。
 public final class ServiceInstanceListSupplierBuilder {
 
 	private static final Log LOG = LogFactory.getLog(ServiceInstanceListSupplierBuilder.class);
@@ -71,6 +72,8 @@ public final class ServiceInstanceListSupplierBuilder {
 	 * {@link ServiceInstanceListSupplier} in the hierarchy.
 	 * @return the {@link ServiceInstanceListSupplierBuilder} object
 	 */
+	// 在层次结构中，将阻塞的基于 {@link DiscoveryClient} 的
+	// {@link DiscoveryClientServiceInstanceListSupplier} 设置为基本 {@link ServiceInstanceListSupplier}。
 	public ServiceInstanceListSupplierBuilder withBlockingDiscoveryClient() {
 		if (baseCreator != null && LOG.isWarnEnabled()) {
 			LOG.warn("Overriding a previously set baseCreator with a blocking DiscoveryClient baseCreator.");

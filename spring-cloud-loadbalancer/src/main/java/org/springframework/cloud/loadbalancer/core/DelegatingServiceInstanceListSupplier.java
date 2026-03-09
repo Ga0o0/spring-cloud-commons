@@ -29,6 +29,7 @@ import org.springframework.util.Assert;
  * @author Olga Maciaszek-Sharma
  * @author Jürgen Kreitler
  */
+// 表示一个使用委托 {@link ServiceInstanceListSupplier} 实例的 {@link ServiceInstanceListSupplier}。
 public abstract class DelegatingServiceInstanceListSupplier
 		implements ServiceInstanceListSupplier, SelectedInstanceCallback, InitializingBean, DisposableBean {
 

@@ -78,7 +78,8 @@ public interface LoadBalancedRetryPolicy {
 	 */
 	// 如果发出请求时未抛出异常，则会调用此方法，根据返回的状态码判断客户端是否希望重试请求。
 	// 例如，在 Cloud Foundry 中，当应用不可用时，路由器将返回 <code>404</code>。
-	// 由于 HTTP 客户端在返回 <code>404</code> 时不会抛出异常，因此 <code>retryableStatusCode</code> 允许客户端强制重试。
+	// 由于 HTTP 客户端在返回 <code>404</code> 时不会抛出异常，因此 <code>retryableStatusCode</code>
+	// 允许客户端强制重试。
 	// @param statusCode HTTP 状态码。
 	// @return 设置为 True 则表示应尝试重试；设置为 false 则表示仅返回响应。
 	boolean retryableStatusCode(int statusCode);

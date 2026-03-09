@@ -33,8 +33,10 @@ import org.springframework.http.client.ClientHttpResponse;
  * @author Olga Maciaszek-Sharma
  * @since 4.1.2
  */
-// 首次调用 {@link ClientHttpRequestInterceptor#intercept(HttpRequest, byte[], ClientHttpRequestExecution)} 方法时，
-// 使用 {@link ObjectProvider} 解析适当的 {@link BlockingLoadBalancerInterceptor} 委托的 {@link ClientHttpRequestInterceptor} 实现。
+// 首次调用 {@link ClientHttpRequestInterceptor#intercept(HttpRequest, byte[],
+// ClientHttpRequestExecution)} 方法时，
+// 使用 {@link ObjectProvider} 解析适当的 {@link BlockingLoadBalancerInterceptor} 委托的 {@link
+// ClientHttpRequestInterceptor} 实现。
 public class DeferringLoadBalancerInterceptor implements ClientHttpRequestInterceptor {
 
 	private final ObjectProvider<BlockingLoadBalancerInterceptor> loadBalancerInterceptorProvider;

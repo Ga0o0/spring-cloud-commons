@@ -30,7 +30,7 @@ import org.springframework.web.reactive.function.client.ClientRequest;
  * @author Olga Maciaszek-Sharma
  * @since 3.1.0
  */
-
+// 添加 X-Forwarded-Host 和 X-Forwarded-Proto 标头。
 public class XForwardedHeadersTransformer implements LoadBalancerClientRequestTransformer {
 
 	private final ReactiveLoadBalancer.Factory<ServiceInstance> clientFactory;

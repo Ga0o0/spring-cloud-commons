@@ -25,6 +25,7 @@ import org.springframework.cloud.client.ServiceInstance;
  * @author Olga Maciaszek-Sharma
  * @since 2.2.0
  */
+// 一个用于 {@link ReactorLoadBalancer} 的标记接口，允许选择 {@link ServiceInstance} 对象。
 public interface ReactorServiceInstanceLoadBalancer extends ReactorLoadBalancer<ServiceInstance> {
 
 }
