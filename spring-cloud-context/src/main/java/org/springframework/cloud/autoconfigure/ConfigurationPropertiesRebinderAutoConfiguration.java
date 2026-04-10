@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Dave Syer
  */
+// {@link ConfigurationPropertiesRebinder} 的自动配置。
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(ConfigurationPropertiesBindingPostProcessor.class)
 public class ConfigurationPropertiesRebinderAutoConfiguration
@@ -65,9 +66,11 @@ public class ConfigurationPropertiesRebinderAutoConfiguration
 		// reflected. In particular this can be important when low level services like
 		// decryption are bootstrapped in the parent, but need to change their
 		// configuration before the child context is processed.
+		// 所有 Bean 初始化完成后，显式地重新绑定父 Bean，以便当前上下文初始化期间的更改能够反映出来。
+		// 当诸如解密之类的低级服务在父级中引导，但需要在处理子上下文之前更改其配置时，这一点尤其重要。
 		if (this.context.getParent() != null) {
 			// TODO: make this optional? (E.g. when creating child contexts that prefer to
-			// be isolated.)
+			// be isolated.) --> 使这个成为可选的？（例如，当创建倾向于隔离的子上下文时。）
 			ConfigurationPropertiesRebinder rebinder = this.context.getBean(ConfigurationPropertiesRebinder.class);
 			for (String name : this.context.getParent().getBeanDefinitionNames()) {
 				rebinder.rebind(name);

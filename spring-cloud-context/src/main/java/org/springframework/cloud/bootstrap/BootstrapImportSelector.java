@@ -46,6 +46,10 @@ import org.springframework.util.StringUtils;
  *
  * @author Spencer Gibb
  */
+// 此类使用 {@link SpringFactoriesLoader} 从 {@code spring.factories} 加载 {@link
+// BootstrapConfiguration} 条目。
+// 然后加载这些类，以便使用 {@link AnnotationAwareOrderComparator#sort(List)} 进行排序。
+// 此类是一个 {@link DeferredImportSelector}，因此支持在导入的类上使用 {@code @Conditional} 注解。
 public class BootstrapImportSelector implements EnvironmentAware, DeferredImportSelector {
 
 	private Environment environment;

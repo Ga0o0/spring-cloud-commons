@@ -50,6 +50,9 @@ import org.springframework.util.ClassUtils;
  * @author Dave Syer
  *
  */
+// 一个用于重启应用上下文的端点。
+// 安装为一个 Bean，并向启动上下文的 {@link SpringApplication} 注册一个 {@link RestartListener}。
+// 这两个组件通过 {@link ApplicationEvent} 进行通信，并设置重启上下文所需的状态。
 @Endpoint(id = "restart", enableByDefault = false)
 public class RestartEndpoint implements ApplicationListener<ContextRefreshedWithApplicationEvent> {
 

@@ -70,6 +70,7 @@ import org.springframework.util.StringUtils;
  * @since 3.1
  *
  */
+// 通用范围实现。
 public class GenericScope
 		implements Scope, BeanFactoryPostProcessor, BeanDefinitionRegistryPostProcessor, DisposableBean {
 
@@ -102,6 +103,8 @@ public class GenericScope
 	 * factory. The default is a unique key based on the bean names in the bean factory.
 	 * @param id The ID to set.
 	 */
+	// 手动覆盖用于标识 bean 工厂的序列化 ID。默认值是基于 bean 工厂中 bean 名称的唯一键。
+	// @param id 要设置的 ID。
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -110,6 +113,8 @@ public class GenericScope
 	 * The cache implementation to use for bean instances in this scope.
 	 * @param cache The cache to use.
 	 */
+	// 此范围内 bean 实例使用的缓存实现。
+	// @param cache 要使用的缓存。
 	public void setScopeCache(ScopeCache cache) {
 		this.cache = new BeanLifecycleWrapperCache(cache);
 	}
@@ -118,6 +123,8 @@ public class GenericScope
 	 * A map of bean name to errors when instantiating the bean.
 	 * @return The errors accumulated since the latest destroy.
 	 */
+	// bean 名称到实例化 bean 时的错误值的映射。
+	// @return 自上次销毁以来累积的错误。
 	public Map<String, Exception> getErrors() {
 		return this.errors;
 	}
@@ -152,6 +159,9 @@ public class GenericScope
 	 * @param name The bean name to flush.
 	 * @return True if the bean was already cached; false otherwise.
 	 */
+	// 销毁指定的 bean（即默认将其从缓存中清除）。
+	// @param name 要清除的 bean 名称。
+	// @return 如果 bean 已被缓存，则返回 true；否则返回 false。
 	protected boolean destroy(String name) {
 		BeanLifecycleWrapper wrapper = this.cache.remove(name);
 		if (wrapper != null) {
@@ -264,6 +274,11 @@ public class GenericScope
 	 * bean names.
 	 * @param beanFactory The bean factory to configure.
 	 */
+	// 如果 Bean 工厂是 DefaultListableBeanFactory，
+	// 那么只要 Bean 工厂的 ID 匹配，它就可以序列化作用域内的 Bean，
+	// 并在其他上下文（甚至其他 JVM）中反序列化它们。
+	// 此方法将序列化 ID 设置为提供给作用域实例的 ID，如果该 ID 为 null，则设置为所有 Bean 名称的哈希值。
+	// @param beanFactory 需要配置的 Bean 工厂。
 	private void setSerializationId(ConfigurableListableBeanFactory beanFactory) {
 
 		if (beanFactory instanceof DefaultListableBeanFactory) {
@@ -296,6 +311,8 @@ public class GenericScope
 	 * The name of this scope. Default "generic".
 	 * @param name The name value to set.
 	 */
+	// 此作用域的名称。默认为“generic”。
+	// @param name 要设置的名称值。
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -343,6 +360,8 @@ public class GenericScope
 	 * @author Dave Syer
 	 *
 	 */
+	// 包装一个 bean 实例及其注册的销毁回调（例如 DisposableBean 等）。
+	// 此外，还可以装饰 bean，以选择性地防止并发访问（例如）。
 	private static class BeanLifecycleWrapper {
 
 		private final String name;
@@ -429,6 +448,8 @@ public class GenericScope
 	 *
 	 * @param <S> - a generic scope extension
 	 */
+	// 具有锁定范围的工厂 bean。
+	// @param <S> - 通用范围扩展
 	@SuppressWarnings("serial")
 	public static class LockedScopedProxyFactoryBean<S extends GenericScope> extends ScopedProxyFactoryBean
 			implements MethodInterceptor {

@@ -28,6 +28,10 @@ import java.util.Collection;
  * @author Dave Syer
  *
  */
+// 专用于 {@link GenericScope} 的缓存接口，用于管理缓存的 Bean 实例。
+// 其实现通常分为两类：一类是“全局”存储值的接口（即每个键对应一个实例），
+// 另一类是基于上下文（例如通过线程本地）每个键可能存储多个实例的接口。
+// 所有实现都应该是线程安全的。
 public interface ScopeCache {
 
 	/**
@@ -35,12 +39,17 @@ public interface ScopeCache {
 	 * @param name The object name.
 	 * @return The object removed, or null if there was none.
 	 */
+	// 从缓存中移除此名称的对象。
+	// @param name 对象名称。
+	// @return 移除的对象，如果不存在则返回 null。
 	Object remove(String name);
 
 	/**
 	 * Clears the cache and returns all objects in an unmodifiable collection.
 	 * @return All objects stored in the cache.
 	 */
+	// 清除缓存并以不可修改的集合形式返回所有对象。
+	// @return 缓存中存储的所有对象。
 	Collection<Object> clear();
 
 	/**
@@ -48,6 +57,9 @@ public interface ScopeCache {
 	 * @param name The name of the object.
 	 * @return The object with that name, or null if there is none.
 	 */
+	// 从缓存中获取指定名称的对象。
+	// @param name 对象的名称。
+	// @return 具有该名称的对象，如果不存在则返回 null。
 	Object get(String name);
 
 	/**
@@ -57,6 +69,10 @@ public interface ScopeCache {
 	 * @param value The new candidate value.
 	 * @return The value that is in the cache at the end of the operation.
 	 */
+	// 如果该键尚未使用，则将值放入缓存中。如果已存在一个与指定名称相同的值，则不会替换该值，而是将其返回给调用者。
+	// @param name 键。
+	// @param value 新的候选值。
+	// @return 操作结束时缓存中的值。
 	Object put(String name, Object value);
 
 }

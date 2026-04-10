@@ -41,6 +41,7 @@ import org.springframework.core.env.Environment;
  * @author Olga Maciaszek-Sharma
  *
  */
+// 监听器查找 {@link EnvironmentChangeEvent} 并在发生任何变化时重新绑定 logger 级别。
 public class LoggingRebinder implements ApplicationListener<EnvironmentChangeEvent>, EnvironmentAware {
 
 	private static final Bindable<Map<String, String>> STRING_STRING_MAP = Bindable.mapOf(String.class, String.class);

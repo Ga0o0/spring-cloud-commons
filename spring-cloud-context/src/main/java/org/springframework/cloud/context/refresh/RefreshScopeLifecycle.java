@@ -30,6 +30,7 @@ import org.springframework.context.Lifecycle;
  * @author Olga Maciaszek-Sharma
  * @since 4.1.0
  */
+// 一个 {@link Lifecycle} 实现，在重启时触发 {@link ContextRefresher#refresh()} 被调用。
 public class RefreshScopeLifecycle implements Lifecycle {
 
 	private static final Log LOG = LogFactory.getLog(RefreshScopeLifecycle.class);

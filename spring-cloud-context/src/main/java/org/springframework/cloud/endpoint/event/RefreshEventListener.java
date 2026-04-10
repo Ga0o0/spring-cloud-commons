@@ -34,6 +34,9 @@ import org.springframework.context.event.SmartApplicationListener;
  *
  * @author Spencer Gibb
  */
+// 收到 {@link RefreshEvent} 时调用 {@link ContextRefresher#refresh}。
+// 仅在收到 {@link ApplicationReadyEvent} 后才响应 {@link RefreshEvent}，
+// 因为 RefreshEvent 可能在应用程序生命周期中出现得太早。
 public class RefreshEventListener implements SmartApplicationListener {
 
 	private static Log log = LogFactory.getLog(RefreshEventListener.class);

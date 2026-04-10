@@ -50,6 +50,10 @@ import org.springframework.util.StringUtils;
  * @see RefreshScope for a deeper and optionally more focused refresh of bean components.
  *
  */
+// 监听 {@link EnvironmentChangeEvent} 事件，
+// 并使用 {@link ConfigurationProperties <code>@ConfigurationProperties</code>} 重新绑定已绑定到
+// {@link Environment} 的 bean。
+// 重新绑定并初始化这些 bean 后，所有使用 <code>@ConfigurationProperties</code> bean 的组件都可以立即应用这些更改。
 @Component
 @ManagedResource
 public class ConfigurationPropertiesRebinder
@@ -74,6 +78,8 @@ public class ConfigurationPropertiesRebinder
 	 * A map of bean name to errors when instantiating the bean.
 	 * @return The errors accumulated since the latest destroy.
 	 */
+	// Bean 名称到实例化 Bean 时的错误信息的映射。
+	// @return 自上次销毁以来累积的错误。
 	public Map<String, Exception> getErrors() {
 		return this.errors;
 	}

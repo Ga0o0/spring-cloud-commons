@@ -30,12 +30,14 @@ public class RsaProperties {
 	/**
 	 * ConfigurationProperties prefix for RsaProperties.
 	 */
+	// RsaProperties 的 ConfigurationProperties 前缀。
 	public static final String PREFIX = "encrypt.rsa";
 
 	/**
 	 * The RSA algorithm to use (DEFAULT or OEAP). Once it is set, do not change it (or
 	 * existing ciphers will not be decryptable).
 	 */
+	// 要使用的 RSA 算法（DEFAULT 或 OEAP）。设置后请勿更改（否则现有密码将无法解密）。
 	private RsaAlgorithm algorithm = RsaAlgorithm.DEFAULT;
 
 	/**
@@ -44,12 +46,15 @@ public class RsaProperties {
 	 * which case "standard" CBC is used instead). Once it is set, do not change it (or
 	 * existing ciphers will not be decryptable).
 	 */
+	// 用于指示内部应使用“强”AES 加密的标志。如果为 true， 则将 GCM 算法应用于 AES 加密字节。
+	// 默认值为 false（在这种情况下，将改用“标准”CBC）。设置后请勿更改（否则现有密码将无法解密）。
 	private boolean strong = false;
 
 	/**
 	 * Salt for the random secret used to encrypt cipher text. Once it is set, do not
 	 * change it (or existing ciphers will not be decryptable).
 	 */
+	// 用于加密密文的随机密钥的盐值。一旦设置，请勿更改它（否则现有密码将无法解密）。
 	private String salt = "deadbeef";
 
 	public RsaAlgorithm getAlgorithm() {

@@ -25,13 +25,14 @@ import org.springframework.util.Assert;
  */
 public final class ProxyUtils {
 
+	// Can't instantiate a utility class --> 译文：无法实例化实用程序类
 	private ProxyUtils() {
 		throw new IllegalStateException("Can't instantiate a utility class");
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T getTargetObject(Object candidate) {
-		Assert.notNull(candidate, "Candidate must not be null");
+		Assert.notNull(candidate, "Candidate must not be null"); // 候选人不能为空
 		try {
 			if (AopUtils.isAopProxy(candidate) && candidate instanceof Advised) {
 				Object target = ((Advised) candidate).getTargetSource().getTarget();
@@ -41,7 +42,7 @@ public final class ProxyUtils {
 			}
 		}
 		catch (Exception ex) {
-			throw new IllegalStateException("Failed to unwrap proxied object", ex);
+			throw new IllegalStateException("Failed to unwrap proxied object", ex); // 无法解开代理对象
 		}
 		return (T) candidate;
 	}

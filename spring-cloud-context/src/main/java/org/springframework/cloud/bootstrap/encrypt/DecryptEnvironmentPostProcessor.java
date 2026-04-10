@@ -36,6 +36,7 @@ import static org.springframework.cloud.util.PropertyUtils.useLegacyProcessing;
  * @author Dave Syer
  * @author Tim Ysewyn
  */
+// 从环境中解密属性并以高优先级插入它们，以便它们覆盖加密值。
 public class DecryptEnvironmentPostProcessor extends AbstractEnvironmentDecrypt
 		implements EnvironmentPostProcessor, Ordered {
 

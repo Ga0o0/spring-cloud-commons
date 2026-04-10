@@ -27,6 +27,7 @@ public class RefreshScopeRefreshedEvent extends ApplicationEvent {
 	/**
 	 * Default name for the refresh scope refreshed event.
 	 */
+	// 刷新范围刷新事件的默认名称。
 	public static final String DEFAULT_NAME = "__refreshAll__";
 
 	private String name;

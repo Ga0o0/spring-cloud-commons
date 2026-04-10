@@ -33,6 +33,8 @@ import org.springframework.core.env.PropertySource;
  * @author Dave Syer
  *
  */
+// 用于定位环境（可能为远程）属性源的策略。
+// 除非实现意图阻止应用程序启动，否则实现不应失败。
 public interface PropertySourceLocator {
 
 	/**
@@ -40,6 +42,9 @@ public interface PropertySourceLocator {
 	 * @return A PropertySource, or null if there is none.
 	 * @throws IllegalStateException if there is a fail-fast condition.
 	 */
+	// @param environment 当前环境。
+	// @return 一个 PropertySource，如果不存在则返回 null。
+	// @throws IllegalStateException 如果有快速失败的情况。
 	PropertySource<?> locate(Environment environment);
 
 	default Collection<PropertySource<?>> locateCollection(Environment environment) {

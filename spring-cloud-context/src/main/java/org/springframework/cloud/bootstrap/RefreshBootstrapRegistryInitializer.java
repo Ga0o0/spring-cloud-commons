@@ -28,11 +28,13 @@ import org.springframework.cloud.context.refresh.ConfigDataContextRefresher;
  * @author Spencer Gibb
  * @since 3.0.3
  */
+// BootstrapRegistryInitializer 将 BootstrapContext 添加到 ApplicationContext 以便稍后在 {@link
+// ConfigDataContextRefresher} 中使用。
 public class RefreshBootstrapRegistryInitializer implements BootstrapRegistryInitializer {
 
 	@Override
 	public void initialize(BootstrapRegistry registry) {
-		// promote BootstrapContext to context
+		// promote BootstrapContext to context --> 译文：将 BootstrapContext 提升为上下文
 		registry.addCloseListener(event -> {
 			BootstrapContext bootstrapContext = event.getBootstrapContext();
 			event.getApplicationContext().getBeanFactory().registerSingleton("bootstrapContext", bootstrapContext);

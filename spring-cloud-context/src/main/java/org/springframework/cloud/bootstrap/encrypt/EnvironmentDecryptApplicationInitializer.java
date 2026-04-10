@@ -43,12 +43,14 @@ import static org.springframework.cloud.util.PropertyUtils.useLegacyProcessing;
  * @author Dave Syer
  * @author Tim Ysewyn
  */
+// 从环境中解密属性并以高优先级插入它们，以便它们覆盖加密值。
 public class EnvironmentDecryptApplicationInitializer extends AbstractEnvironmentDecrypt
 		implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
 
 	/**
 	 * Name of the decrypted bootstrap property source.
 	 */
+	// 解密的引导属性源的名称。
 	public static final String DECRYPTED_BOOTSTRAP_PROPERTY_SOURCE_NAME = "decryptedBootstrap";
 
 	private int order = Ordered.HIGHEST_PRECEDENCE + 15;

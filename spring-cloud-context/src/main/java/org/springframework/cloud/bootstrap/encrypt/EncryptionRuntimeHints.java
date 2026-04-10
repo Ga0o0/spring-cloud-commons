@@ -25,6 +25,7 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar;
  *
  * @author Dave Syer
  */
+// {@link RuntimeHintsRegistrar} 用于 {@code RsaSecretEncryptor}。
 class EncryptionRuntimeHints implements RuntimeHintsRegistrar {
 
 	@Override

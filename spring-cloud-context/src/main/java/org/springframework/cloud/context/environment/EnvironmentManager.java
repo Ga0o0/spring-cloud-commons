@@ -38,6 +38,8 @@ import org.springframework.stereotype.Component;
  * @author Dave Syer
  *
  */
+// 对正在运行的应用程序的 {@link Environment} 进行本地（但不稳定）更改的入口点。
+// 允许添加属性并更改值，只需将它们添加到现有环境中的高优先级属性源即可。
 @Component
 @ManagedResource
 public class EnvironmentManager implements ApplicationEventPublisherAware {

@@ -33,6 +33,7 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
  * @author Marcin Grzejszczak
  * @since 3.0.0
  */
+// 如果正确使用 {cipher} 作为前缀，BindHandler 将使用 TextEncryptor 来解密文本。
 public class TextEncryptorBindHandler extends AbstractBindHandler {
 
 	private static final Log logger = LogFactory.getLog(TextEncryptorBindHandler.class);

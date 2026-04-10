@@ -21,6 +21,7 @@ package org.springframework.cloud.context.encrypt;
  *
  * @author Dave Syer
  */
+// 与密钥格式相关的异常。
 @SuppressWarnings("serial")
 public class KeyFormatException extends RuntimeException {
 

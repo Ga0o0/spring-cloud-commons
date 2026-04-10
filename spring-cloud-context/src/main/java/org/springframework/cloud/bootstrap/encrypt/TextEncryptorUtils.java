@@ -46,6 +46,11 @@ public abstract class TextEncryptorUtils {
 	 * @param propertySources the property sources to decrypt.
 	 * @return the decrypted properties.
 	 */
+	// 解密环境。参见 {@link DecryptEnvironmentPostProcessor}。
+	// @param decoder {@link AbstractEnvironmentDecrypt}
+	// @param environment 要从中获取密钥属性的环境。
+	// @param propertySources 要解密的属性源。
+	// @return 解密后的属性。
 	static Map<String, Object> decrypt(AbstractEnvironmentDecrypt decryptor, ConfigurableEnvironment environment,
 			MutablePropertySources propertySources) {
 		TextEncryptor encryptor = getTextEncryptor(decryptor, environment);
@@ -74,6 +79,8 @@ public abstract class TextEncryptorUtils {
 	 * {@link TextEncryptorConfigBootstrapper}.
 	 * @param registry the BootstrapRegistry.
 	 */
+	// 在 {@link TextEncryptorConfigBootstrapper} 中注册所有需要 {@link TextEncryptor} 的类。
+	// @param registry BootstrapRegistry。
 	public static void register(BootstrapRegistry registry) {
 		registry.registerIfAbsent(TextEncryptor.class, context -> {
 			KeyProperties keyProperties = context.get(KeyProperties.class);
@@ -102,6 +109,9 @@ public abstract class TextEncryptorUtils {
 	 * @param bootstrapContext the Context.
 	 * @param beanFactory the bean factory.
 	 */
+	// 将 {@link TextEncryptor} 提升到 {@link ApplicationContext}。
+	// @param bootstrapContext 上下文。
+	// @param beanFactory Bean 工厂。
 	public static void promote(BootstrapContext bootstrapContext, ConfigurableListableBeanFactory beanFactory) {
 		TextEncryptor textEncryptor = bootstrapContext.get(TextEncryptor.class);
 		if (textEncryptor != null) {
@@ -115,6 +125,10 @@ public abstract class TextEncryptorUtils {
 	 * @param rsaProperties RSA properties.
 	 * @return created {@link TextEncryptor}.
 	 */
+	// 通过属性创建 {@link TextEncryptor} 的实用程序。
+	// @param keyProperties 密钥属性。
+	// @param rsaProperties RSA 属性。
+	// @return 创建了 {@link TextEncryptor}。
 	public static TextEncryptor createTextEncryptor(KeyProperties keyProperties, RsaProperties rsaProperties) {
 		KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
 		if (keyStore.getLocation() != null) {
@@ -137,6 +151,9 @@ public abstract class TextEncryptorUtils {
 	 * @param properties the Key properties.
 	 * @return true if configured.
 	 */
+	// 是否已配置密钥。
+	// @param properties 密钥属性。
+	// @return 如果已配置，则返回 true。
 	public static boolean keysConfigured(KeyProperties properties) {
 		if (hasProperty(properties.getKeyStore().getLocation())) {
 			if (hasProperty(properties.getKeyStore().getPassword())) {
@@ -163,6 +180,9 @@ public abstract class TextEncryptorUtils {
 	 * @param environment where to check properties.
 	 * @return true if bootstrap enabled.
 	 */
+	// 用于检查旧式引导模式是否已启用的方法。检查方式为：设置引导旧式处理属性，或 spring.cloud.bootstrap.enabled=true。
+	// @param environment 用于检查属性的位置。
+	// @return true 表示已启用引导。
 	public static boolean isLegacyBootstrap(Environment environment) {
 		boolean isLegacy = PropertyUtils.useLegacyProcessing(environment);
 		boolean isBootstrapEnabled = PropertyUtils.bootstrapEnabled(environment);
@@ -176,6 +196,7 @@ public abstract class TextEncryptorUtils {
 	 * @author Dave Syer
 	 *
 	 */
+	// TextEncryptor 刚刚失败，因此用户不会因为将密码添加到配置文件而无法解密而产生虚假的安全感。
 	public static class FailsafeTextEncryptor implements TextEncryptor {
 
 		private TextEncryptor delegate;
@@ -190,6 +211,11 @@ public abstract class TextEncryptorUtils {
 		 * us the option to set the delegate later on when we have the necessary values.
 		 * @param delegate The TextEncryptor to use for encryption/decryption
 		 */
+		// 如果在应用初始化完成后，我们拥有创建合适的 {@link TextEncryptor} 所需的值，则可以设置一个委托，用于加密/解密值。
+		// 根据加密密钥的设置位置，我们可能没有正确的值来创建 {@link TextEncryptor}
+		// （例如，如果密钥位于 application.properties 中，但我们在 Bootstrap 期间创建了文本加密器，则可能会发生这种情况）。
+		// 委托功能允许我们在获得必要的值后再设置委托。
+		// @param delegate 用于加密/解密的 TextEncryptor
 		public void setDelegate(TextEncryptor delegate) {
 			this.delegate = delegate;
 		}

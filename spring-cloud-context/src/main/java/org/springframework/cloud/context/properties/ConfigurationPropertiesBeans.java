@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Dave Syer
  */
+// 收集上下文及其父级中的 <code>@ConfigurationProperties</code> bean 的引用。
 @Component
 public class ConfigurationPropertiesBeans implements BeanPostProcessor, ApplicationContextAware {
 

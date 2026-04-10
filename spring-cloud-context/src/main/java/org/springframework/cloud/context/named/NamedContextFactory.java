@@ -57,6 +57,8 @@ import org.springframework.util.Assert;
  * @author Tommy Karlsson
  * @author Olga Maciaszek-Sharma
  */
+// 创建一组子上下文，允许使用一组规范来定义每个子上下文中的 bean。
+// 移植自 spring-cloud-netflix FeignClientFactory 和 SpringClientFactory。
 public abstract class NamedContextFactory<C extends NamedContextFactory.Specification>
 		implements DisposableBean, ApplicationContextAware {
 

@@ -110,6 +110,7 @@ public class EncryptionBootstrapConfiguration {
 	/**
 	 * A Spring Boot condition for key encryption.
 	 */
+	// 密钥加密的 Spring Boot 条件。
 	public static class KeyCondition extends SpringBootCondition {
 
 		@Override

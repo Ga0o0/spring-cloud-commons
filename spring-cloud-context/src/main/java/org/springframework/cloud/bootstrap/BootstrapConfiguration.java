@@ -29,6 +29,8 @@ import java.lang.annotation.Target;
  * @author Dave Syer
  *
  */
+// 一个标记接口，用作 <code>META-INF/spring.factories</code> 中的键。
+// factories 文件中的条目用于创建引导应用程序上下文。
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -38,6 +40,8 @@ public @interface BootstrapConfiguration {
 	 * Excludes specific auto-configuration classes such that they will never be applied.
 	 * @return classes to exclude
 	 */
+	// 排除特定的自动配置类，使它们永远不会被应用。
+	// @return 要排除的类
 	Class<?>[] exclude() default {};
 
 }

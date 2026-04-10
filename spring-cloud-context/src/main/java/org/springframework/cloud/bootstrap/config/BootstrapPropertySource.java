@@ -31,6 +31,7 @@ import static org.springframework.cloud.bootstrap.config.PropertySourceBootstrap
  *
  * @author Ryan Baxter
  */
+// 属性源的可枚举包装器。
 public class BootstrapPropertySource<T> extends EnumerablePropertySource<T> {
 
 	private EnumerablePropertySource<T> delegate;

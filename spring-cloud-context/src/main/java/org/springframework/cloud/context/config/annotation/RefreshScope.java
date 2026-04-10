@@ -36,6 +36,10 @@ import org.springframework.core.annotation.AliasFor;
  * @author Dave Syer
  *
  */
+// 便捷的注解，用于将 <code>@Bean</code> 定义放入 {@link
+// org.springframework.cloud.context.scope.refresh.RefreshScope 刷新范围}。
+// 通过这种方式注解的 Bean 可以在运行时刷新，并且任何使用它们的组件都会在下一次方法调用时获得一个新实例，
+// 该实例已完全初始化并注入了所有依赖项。
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Scope("refresh")
@@ -47,6 +51,9 @@ public @interface RefreshScope {
 	 * @see Scope#proxyMode()
 	 * @return proxy mode
 	 */
+	// {@link Scope#proxyMode} 的别名。
+	// @see Scope#proxyMode()
+	// @return 代理模式
 	@AliasFor(annotation = Scope.class)
 	ScopedProxyMode proxyMode() default ScopedProxyMode.TARGET_CLASS;
 

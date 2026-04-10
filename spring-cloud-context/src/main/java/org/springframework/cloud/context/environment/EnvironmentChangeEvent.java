@@ -27,6 +27,7 @@ import org.springframework.core.env.Environment;
  * @author Dave Syer
  *
  */
+// 发布事件以表示 {@link Environment} 的变化。
 @SuppressWarnings("serial")
 public class EnvironmentChangeEvent extends ApplicationEvent {
 
@@ -34,6 +35,7 @@ public class EnvironmentChangeEvent extends ApplicationEvent {
 
 	public EnvironmentChangeEvent(Set<String> keys) {
 		// Backwards compatible constructor with less utility (practically no use at all)
+		// 向后兼容的构造函数，但实用性较低（实际上根本没有用）
 		this(keys, keys);
 	}
 

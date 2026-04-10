@@ -24,35 +24,41 @@ import org.springframework.core.io.Resource;
  *
  * @author Dave Syer
  */
+// 密钥加密属性。
 @ConfigurationProperties(KeyProperties.PREFIX)
 public class KeyProperties {
 
 	/**
 	 * ConfigurationProperties prefix for KeyProperties.
 	 */
+	// KeyProperties 的 ConfigurationProperties 前缀。
 	public static final String PREFIX = "encrypt";
 
 	/**
 	 * A symmetric key. As a stronger alternative, consider using a keystore.
 	 */
+	// 对称密钥。作为更强大的替代方案，请考虑使用密钥库。
 	private String key;
 
 	/**
 	 * A salt for the symmetric key, in the form of a hex-encoded byte array. As a
 	 * stronger alternative, consider using a keystore.
 	 */
+	// 对称密钥的盐值，采用十六进制编码的字节数组形式。作为更强大的替代方案，请考虑使用密钥库。
 	private String salt = "deadbeef";
 
 	/**
 	 * Flag to say that a process should fail if there is an encryption or decryption
 	 * error.
 	 */
+	// 标记，用于指示如果发生加密或解密错误，则进程应该失败。
 	private boolean failOnError = true;
 
 	/**
 	 * The key store properties for locating a key in a Java Key Store (a file in a format
 	 * defined and understood by the JVM).
 	 */
+	// 用于在 Java 密钥库（JVM 定义和理解的格式的文件）中定位密钥的密钥库属性。
 	private KeyStore keyStore = new KeyStore();
 
 	public boolean isFailOnError() {

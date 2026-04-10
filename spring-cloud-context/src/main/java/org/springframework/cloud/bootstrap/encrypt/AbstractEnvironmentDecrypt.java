@@ -35,6 +35,7 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 /**
  * Abstract class that handles decrypting and merging of PropertySources.
  */
+// 处理 PropertySources 解密和合并的抽象类。
 public abstract class AbstractEnvironmentDecrypt {
 
 	private static final Pattern COLLECTION_PROPERTY = Pattern.compile("(\\S+)?\\[(\\d+)\\](\\.\\S+)?");
@@ -42,11 +43,13 @@ public abstract class AbstractEnvironmentDecrypt {
 	/**
 	 * Name of the decrypted property source.
 	 */
+	// 解密后的属性源的名称。
 	public static final String DECRYPTED_PROPERTY_SOURCE_NAME = "decrypted";
 
 	/**
 	 * Prefix indicating an encrypted value.
 	 */
+	// 表示加密值的前缀。
 	public static final String ENCRYPTED_PROPERTY_PREFIX = "{cipher}";
 
 	protected Log logger = LogFactory.getLog(getClass());
@@ -57,6 +60,8 @@ public abstract class AbstractEnvironmentDecrypt {
 	 * Strategy to determine how to handle exceptions during decryption.
 	 * @param failOnError the flag value (default true)
 	 */
+	// 确定如何处理解密过程中的异常的策略。
+	// @param failOnError 标志值（默认为 true）
 	public void setFailOnError(boolean failOnError) {
 		this.failOnError = failOnError;
 	}

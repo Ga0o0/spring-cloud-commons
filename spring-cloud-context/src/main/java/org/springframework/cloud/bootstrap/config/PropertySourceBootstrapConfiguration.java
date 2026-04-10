@@ -71,6 +71,7 @@ public class PropertySourceBootstrapConfiguration implements ApplicationListener
 	/**
 	 * Bootstrap property source name.
 	 */
+	// 引导属性源名称。
 	public static final String BOOTSTRAP_PROPERTY_SOURCE_NAME = BootstrapApplicationListener.BOOTSTRAP_PROPERTY_SOURCE_NAME
 			+ "Properties";
 
@@ -103,6 +104,12 @@ public class PropertySourceBootstrapConfiguration implements ApplicationListener
 	 * "second fetch" of configuration data to fetch any additional configuration data
 	 * from profiles that have been activated.
 	 */
+	// 主应用程序上下文初始化时，会调用 ApplicationListener。
+	// 在引导阶段触发 ApplicationListener ContextRefreshedEvent 后，会调用此方法。
+	// 此方法也是 Spring Cloud 2021.0.7 之前版本新增 PropertySources 的原因，
+	// 因此当 spring.cloud.config.initialize-on-context-refresh 为 false 时会调用此方法。
+	// 当 spring.cloud.config.initialize-on-context-refresh 为 true 时，
+	// 此方法会提供配置数据的“二次获取”，以便从已激活的配置文件中获取任何其他配置数据。
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		if (!bootstrapProperties.isInitializeOnContextRefresh() || !applicationContext.getEnvironment()

@@ -64,6 +64,7 @@ import org.springframework.util.StringUtils;
  * @author Venil Noronha
  * @author Olga Maciaszek-Sharma
  */
+// 自动配置刷新范围和与环境变化相关的功能（例如重新绑定记录器级别）。
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(RefreshScope.class)
 @ConditionalOnProperty(name = RefreshAutoConfiguration.REFRESH_SCOPE_ENABLED, matchIfMissing = true)
@@ -74,16 +75,19 @@ public class RefreshAutoConfiguration {
 	/**
 	 * Name of the refresh scope name.
 	 */
+	// 刷新范围的名称。
 	public static final String REFRESH_SCOPE_NAME = "refresh";
 
 	/**
 	 * Name of the prefix for refresh scope.
 	 */
+	// 刷新范围的前缀名称。
 	public static final String REFRESH_SCOPE_PREFIX = "spring.cloud.refresh";
 
 	/**
 	 * Name of the enabled prefix for refresh scope.
 	 */
+	// 已启用的刷新范围前缀名称。
 	public static final String REFRESH_SCOPE_ENABLED = REFRESH_SCOPE_PREFIX + ".enabled";
 
 	@Bean
@@ -133,6 +137,8 @@ public class RefreshAutoConfiguration {
 		 * property sources are retained. This property allows property sources, such as
 		 * property sources created by EnvironmentPostProcessors to be retained as well.
 		 */
+		// 刷新期间要保留的其他属性源。通常仅保留系统属性源。
+		// 此属性也允许保留属性源，例如由 EnvironmentPostProcessors 创建的属性源。
 		private List<String> additionalPropertySourcesToRetain;
 
 		public List<String> getAdditionalPropertySourcesToRetain() {
@@ -165,6 +171,7 @@ public class RefreshAutoConfiguration {
 		 * Class names for beans to post process into refresh scope. Useful when you don't
 		 * control the bean definition (e.g. it came from auto-configuration).
 		 */
+		// 用于将 bean 提交到刷新范围的类名。当您无法控制 bean 的定义（例如，它来自自动配置）时很有用。
 		private Set<String> refreshables = new HashSet<>();
 
 		public Set<String> getRefreshable() {

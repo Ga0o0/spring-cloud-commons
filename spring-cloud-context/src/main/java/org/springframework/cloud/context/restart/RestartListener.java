@@ -31,6 +31,7 @@ import org.springframework.context.event.SmartApplicationListener;
  * @author Dave Syer
  *
  */
+// 侦听器在应用程序启动时存储有关应用程序的足够信息，以便能够在需要时稍后重新启动它。
 public class RestartListener implements SmartApplicationListener {
 
 	private ConfigurableApplicationContext context;

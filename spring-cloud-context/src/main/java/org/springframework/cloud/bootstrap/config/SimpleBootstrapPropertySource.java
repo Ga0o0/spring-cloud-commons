@@ -25,6 +25,7 @@ import static org.springframework.cloud.bootstrap.config.PropertySourceBootstrap
  *
  * @author Ryan Baxter
  */
+// 简单、不可枚举的 PropertySource 包装器。
 public class SimpleBootstrapPropertySource<T> extends PropertySource<T> {
 
 	private PropertySource<T> delegate;

@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Dave Syer
  *
  */
+// 由并发映射支持的简单缓存实现。
 public class StandardScopeCache implements ScopeCache {
 
 	private final ConcurrentMap<String, Object> cache = new ConcurrentHashMap<>();

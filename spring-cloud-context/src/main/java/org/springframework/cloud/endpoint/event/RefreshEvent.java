@@ -24,6 +24,7 @@ import org.springframework.context.ApplicationEvent;
  *
  * @author Spencer Gibb
  */
+// 触发对 {@link RefreshEndpoint#refresh()} 的调用的事件。
 @SuppressWarnings("serial")
 public class RefreshEvent extends ApplicationEvent {
 

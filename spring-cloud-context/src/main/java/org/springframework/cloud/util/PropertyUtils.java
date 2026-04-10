@@ -24,21 +24,25 @@ public abstract class PropertyUtils {
 	/**
 	 * Property name for checking if bootstrap is enabled.
 	 */
+	// 用于检查引导程序是否已启用的属性名。
 	public static final String BOOTSTRAP_ENABLED_PROPERTY = "spring.cloud.bootstrap.enabled";
 
 	/**
 	 * Property name for spring boot legacy processing.
 	 */
+	// 用于 Spring Boot 遗留处理的属性名。
 	public static final String USE_LEGACY_PROCESSING_PROPERTY = "spring.config.use-legacy-processing";
 
 	/**
 	 * Property name for bootstrap marker class name.
 	 */
+	// 用于引导标记类名称的属性名。
 	public static final String MARKER_CLASS = "org.springframework.cloud.bootstrap.marker.Marker";
 
 	/**
 	 * Boolean if bootstrap marker class exists.
 	 */
+	// 布尔值，表示引导标记类是否存在。
 	public static final boolean MARKER_CLASS_EXISTS = ClassUtils.isPresent(MARKER_CLASS, null);
 
 	private PropertyUtils() {

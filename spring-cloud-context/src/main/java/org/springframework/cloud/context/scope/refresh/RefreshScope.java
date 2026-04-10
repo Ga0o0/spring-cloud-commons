@@ -65,6 +65,24 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * @since 3.1
  *
  */
+// <p>
+// 允许在运行时动态刷新 Bean 的 Scope 实现（参见 {@link #refresh(String)} 和 {@link #refreshAll()}）。
+// 如果 Bean 被刷新，则下次访问该 Bean（即执行方法）时会创建一个新实例。
+// 所有生命周期方法都会应用于 Bean 实例，因此在 Bean 工厂中注册的所有销毁回调都会在刷新时调用，然后在创建新实例时照常调用初始化回调。
+// 新的 Bean 实例是根据原始 Bean 定义创建的，因此任何外部化的内容（属性占位符或字符串字面量中的表达式）都会在创建时重新计算。
+// </p>
+//
+// <p>
+// 请注意，此作用域中的所有 Bean 仅在首次访问时初始化，因此该作用域强制使用延迟初始化语义。
+// </p>
+//
+// <p>
+// 此处采用的作用域代理方法有一个附带好处，即 Bean 实例自动 {@link Serializable}，
+// 并且只要接收方在另一端具有相同的应用程序上下文，就可以跨网络发送。
+// 为了确保两个上下文确认它们是相同的，它们必须具有相同的序列化 ID。
+// 默认情况下，系统会根据 Bean 名称自动生成一个序列化 ID，因此两个具有相同 Bean 名称的上下文默认能够通过名称交换 Bean。
+// 如果需要覆盖默认 ID，请在声明作用域时提供显式的 {@link #setId(String) id}。
+// </p>
 @ManagedResource
 public class RefreshScope extends GenericScope
 		implements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent>, Ordered {
@@ -80,6 +98,7 @@ public class RefreshScope extends GenericScope
 	/**
 	 * Creates a scope instance and gives it the default name: "refresh".
 	 */
+	// 创建一个范围实例并赋予其默认名称：“refresh”。
 	public RefreshScope() {
 		super.setName("refresh");
 	}
@@ -98,6 +117,8 @@ public class RefreshScope extends GenericScope
 	 * on startup. Default true.
 	 * @param eager The flag to set.
 	 */
+	// 此标志用于确定是否应在启动时立即实例化刷新范围内的所有 Bean。默认为 true。
+	// @param eager 需要设置的标志。
 	public void setEager(boolean eager) {
 		this.eager = eager;
 	}
@@ -119,7 +140,7 @@ public class RefreshScope extends GenericScope
 		}
 	}
 
-	private void eagerlyInitialize() {
+	private void eagerlyInitialize() { // 热切地初始化
 		for (String name : this.context.getBeanDefinitionNames()) {
 			BeanDefinition definition = this.registry.getBeanDefinition(name);
 			if (this.getName().equals(definition.getScope()) && !definition.isLazyInit()) {
@@ -137,6 +158,9 @@ public class RefreshScope extends GenericScope
 	 * @param type bean type to rebind.
 	 * @return true, if successful.
 	 */
+	// 警告：此方法会使用主应用程序上下文刷新层次结构中任何上下文的 bean。
+	// @param type 要重新绑定的 bean 类型。
+	// @return true（如果成功）。
 	public boolean refresh(Class type) {
 		String[] beanNamesForType = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(this.context, type);
 		if (beanNamesForType.length > 0) {
@@ -145,15 +169,17 @@ public class RefreshScope extends GenericScope
 		return false;
 	}
 
+	// 处理所提供的 bean 名称的当前实例并在下一次方法执行时强制刷新。
 	@ManagedOperation(description = "Dispose of the current instance of bean name "
 			+ "provided and force a refresh on next method execution.")
 	public boolean refresh(String name) {
 		if (!ScopedProxyUtils.isScopedTarget(name)) {
 			// User wants to refresh the bean with this name but that isn't the one in the
-			// cache...
+			// cache... --> 译文：用户想要刷新具有此名称的 bean，但这不是缓存中的 bean...
 			name = ScopedProxyUtils.getTargetBeanName(name);
 		}
-		// Ensure lifecycle is finished if bean was disposable
+		// Ensure lifecycle is finished if bean was disposable --> 译文：如果 bean
+		// 是一次性的，请确保其生命周期已经结束
 		if (super.destroy(name)) {
 			this.context.publishEvent(new RefreshScopeRefreshedEvent(name));
 			return true;
@@ -161,6 +187,7 @@ public class RefreshScope extends GenericScope
 		return false;
 	}
 
+	// 处理此范围内所有 bean 的当前实例，并在下次执行方法时强制刷新。
 	@ManagedOperation(description = "Dispose of the current instance of all beans "
 			+ "in this scope and force a refresh on next method execution.")
 	public void refreshAll() {

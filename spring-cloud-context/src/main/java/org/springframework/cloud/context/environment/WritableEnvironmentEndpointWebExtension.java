@@ -33,6 +33,7 @@ import org.springframework.boot.actuate.env.EnvironmentEndpointWebExtension;
  * @author Dave Syer
  *
  */
+// {@link EnvironmentManager} 的 MVC 端点，提供向 /env 发送 POST 请求，作为更改环境变量的简单方法。
 @EndpointWebExtension(endpoint = WritableEnvironmentEndpoint.class)
 public class WritableEnvironmentEndpointWebExtension extends EnvironmentEndpointWebExtension {
 

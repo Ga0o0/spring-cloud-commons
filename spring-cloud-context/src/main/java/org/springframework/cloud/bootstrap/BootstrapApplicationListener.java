@@ -74,21 +74,28 @@ import static org.springframework.cloud.util.PropertyUtils.useLegacyProcessing;
  * @author Dave Syer
  *
  */
+// 一个监听器，它通过将任务委托给位于单独引导上下文中的 {@link ApplicationContextInitializer} bean 来准备
+// SpringApplication（例如，填充其环境变量）。
+// 引导上下文是一个 SpringApplication，它由 spring.factories 中定义的 {@link BootstrapConfiguration} 源创建，
+// 并使用从“bootstrap.properties”（或 yml 文件）获取的外部配置进行初始化，而不是从常规的“application.properties”文件中获取。
 public class BootstrapApplicationListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, Ordered {
 
 	/**
 	 * Property source name for bootstrap.
 	 */
+	// 引导程序的属性源名称。
 	public static final String BOOTSTRAP_PROPERTY_SOURCE_NAME = "bootstrap";
 
 	/**
 	 * The default order for this listener.
 	 */
+	// 此监听器的默认顺序。
 	public static final int DEFAULT_ORDER = Ordered.HIGHEST_PRECEDENCE + 5;
 
 	/**
 	 * The name of the default properties.
 	 */
+	// 默认属性的名称。
 	public static final String DEFAULT_PROPERTIES = "springCloudDefaultProperties";
 
 	private int order = DEFAULT_ORDER;

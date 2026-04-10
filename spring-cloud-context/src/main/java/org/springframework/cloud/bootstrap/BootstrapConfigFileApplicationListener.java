@@ -119,6 +119,24 @@ import org.springframework.util.StringUtils;
  * @author Olga Maciaszek-Sharma
  * @since 1.0.0 {@link ConfigDataEnvironmentPostProcessor}
  */
+// {@link EnvironmentPostProcessor} 通过从常用文件位置加载属性来配置上下文环境。
+// 默认情况下，属性将从以下位置的 “application.properties” 和/或 “application.yml” 文件加载：
+// <ul>
+// <li>file:./config/</li>
+// <li>file:./config/{@literal *}/</li>
+// <li>file:./</li>
+// <li>classpath:config/</li>
+// <li>classpath:</li>
+// </ul>
+// 此列表按优先级排序（列表中较高位置定义的属性将覆盖较低位置定义的属性）。
+// <p>
+// 可以使用 {@link #setSearchLocations(String)} 和 {@link #setSearchNames(String)} 指定其他搜索位置和名称。
+// <p>
+// 还将根据活动配置文件加载其他文件。
+// 例如，如果 “web” 配置文件处于活动状态，则会考虑 “application-web.properties” 和 “application-web.yml”。
+// <p>
+// “spring.config.name” 属性可用于指定要加载的备用名称，“spring.config.location” 属性可用于指定备用搜索位置或特定文件。
+// <p>
 public class BootstrapConfigFileApplicationListener
 		implements EnvironmentPostProcessor, SmartApplicationListener, Ordered {
 
@@ -142,35 +160,44 @@ public class BootstrapConfigFileApplicationListener
 	/**
 	 * The "active profiles" property name.
 	 */
+	// “活动配置文件”属性名称。
 	public static final String ACTIVE_PROFILES_PROPERTY = "spring.profiles.active";
 
 	/**
 	 * The "includes profiles" property name.
 	 */
+	// “包含配置文件”属性名称。
 	public static final String INCLUDE_PROFILES_PROPERTY = "spring.profiles.include";
 
 	/**
 	 * The "config name" property name.
 	 */
+	// “配置名称”属性名称。
 	public static final String CONFIG_NAME_PROPERTY = "spring.config.name";
 
 	/**
 	 * The "config location" property name.
 	 */
+	// “配置位置”属性名称。
 	public static final String CONFIG_LOCATION_PROPERTY = "spring.config.location";
 
 	/**
 	 * The "config additional location" property name.
 	 */
+	// “配置附加位置”属性名称。
 	public static final String CONFIG_ADDITIONAL_LOCATION_PROPERTY = "spring.config.additional-location";
 
 	/**
 	 * The default order for the processor.
 	 */
+	// 处理器的默认顺序。
 	public static final int DEFAULT_ORDER =
 			// This listener needs to run after the `ConfigDataEnvironmentPostProcessor`
 			// and `HostInfoEnvironmentPostProcessor`
 			// to make sure the `Environment.activeProfiles` are correctly set
+			// --> 翻译：此监听器需要在 `ConfigDataEnvironmentPostProcessor` 和
+			// `HostInfoEnvironmentPostProcessor` 之后运行，
+			// 以确保 `Environment.activeProfiles` 已正确设置
 			Math.addExact(ConfigDataEnvironmentPostProcessor.ORDER, 2);
 
 	private final Log logger;

@@ -44,6 +44,7 @@ import org.springframework.core.env.Environment;
  * @author Stephane Nicoll
  * @since 2.0.0
  */
+// {@link EnableAutoConfiguration 自动配置} 用于 {@link WritableEnvironmentEndpoint}。
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ EnvironmentEndpoint.class, EnvironmentEndpointProperties.class })
 @ConditionalOnBean(EnvironmentManager.class)

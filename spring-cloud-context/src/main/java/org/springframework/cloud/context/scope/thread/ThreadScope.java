@@ -28,6 +28,7 @@ public class ThreadScope extends GenericScope {
 	/**
 	 * Creates a scope instance and gives it the default name: "thread".
 	 */
+	// 创建一个范围实例并赋予其默认名称：“thread”。
 	public ThreadScope() {
 		super();
 		super.setName("thread");

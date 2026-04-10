@@ -32,6 +32,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @author Dave Syer
  *
  */
+// 自动配置一些管理应用程序上下文生命周期的 MVC 端点。
+// 提供重新启动、暂停、恢复、刷新（环境）和环境更新端点。
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 public class LifecycleMvcEndpointAutoConfiguration {

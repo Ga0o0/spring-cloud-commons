@@ -32,6 +32,8 @@ import org.springframework.lang.Nullable;
  *
  * @param <T> - type of the provided object
  */
+// 特殊的 ObjectProvider，由于创建了命名的子上下文，因此允许稍后解析实际的 ObjectProvider。
+// @param <T> - 所提供对象的类型
 class ClientFactoryObjectProvider<T> implements ObjectProvider<T> {
 
 	private final NamedContextFactory<?> clientFactory;

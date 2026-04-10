@@ -32,11 +32,13 @@ import org.springframework.util.ClassUtils;
  * @author Marcin Grzejszczak
  * @since 3.0.0
  */
+// 引导程序
 public class TextEncryptorConfigBootstrapper implements BootstrapRegistryInitializer {
 
 	/**
 	 * RsaSecretEncryptor present.
 	 */
+	// RsaSecretEncryptor 存在。
 	public static final boolean RSA_IS_PRESENT = ClassUtils
 		.isPresent("org.springframework.security.rsa.crypto.RsaSecretEncryptor", null);
 

@@ -30,6 +30,9 @@ import org.springframework.util.ClassUtils;
  *
  * @author Dave Syer
  */
+// 在启动时创建引导上下文后立即清理日志系统。
+// 日志将保持关闭状态，直到 ConfigFileApplicationListener 触发，
+// 但这是我们为该监听器能够根据其自身配置中的内容调整日志级别所付出的代价。
 public class LoggingSystemShutdownListener
 		implements ApplicationListener<ApplicationEnvironmentPreparedEvent>, Ordered {
 

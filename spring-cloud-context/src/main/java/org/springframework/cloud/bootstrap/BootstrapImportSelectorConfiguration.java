@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author Spencer Gibb
  */
+// 配置导入 {@link BootstrapImportSelector} 配置。
 @Configuration(proxyBeanMethods = false)
 @Import(BootstrapImportSelector.class)
 public class BootstrapImportSelectorConfiguration {

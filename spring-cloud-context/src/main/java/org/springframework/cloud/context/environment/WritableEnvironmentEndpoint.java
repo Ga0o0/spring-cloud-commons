@@ -28,6 +28,7 @@ import org.springframework.core.env.Environment;
  * @author Stephane Nicoll
  * @since 2.0.0
  */
+// 标准 {@link EnvironmentEndpoint} 的扩展，允许在运行时修改环境。
 public class WritableEnvironmentEndpoint extends EnvironmentEndpoint {
 
 	public WritableEnvironmentEndpoint(Environment environment, Iterable<SanitizingFunction> sanitizingFunctions,

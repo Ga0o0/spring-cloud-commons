@@ -27,6 +27,8 @@ public class OriginTrackedCompositePropertySource extends CompositePropertySourc
 	 * Create a new {@code CompositePropertySource}.
 	 * @param name the name of the property source
 	 */
+	// 创建一个新的 {@code CompositePropertySource}。
+	// @param name 属性源的名称
 	public OriginTrackedCompositePropertySource(String name) {
 		super(name);
 	}

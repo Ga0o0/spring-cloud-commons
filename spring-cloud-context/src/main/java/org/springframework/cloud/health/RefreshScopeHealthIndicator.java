@@ -32,6 +32,8 @@ import org.springframework.cloud.context.scope.refresh.RefreshScope;
  *
  * @author Dave Syer
  */
+// 刷新范围和配置属性重新绑定的健康指示器。
+// 如果环境变化导致 Bean 实例化或绑定失败，此指示器通常会指示问题所在并切换为“DOWN”。
 public class RefreshScopeHealthIndicator extends AbstractHealthIndicator {
 
 	private ObjectProvider<RefreshScope> scope;
